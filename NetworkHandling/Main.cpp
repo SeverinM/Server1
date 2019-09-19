@@ -1,8 +1,14 @@
-#include "SFML/Network.hpp"
+#include "src/NetFix.h"
+#include <iostream>
+#include <string>
 
 int main()
 {
-	sf::TcpSocket socket;
-	sf::Socket::Status status = socket.connect("192.168.0.5", 53000);
+	NetFix* nf = NetFix::GetInstance();
+	nf->Init();
+
+	std::string a;
+	std::cin >> a;
+
 	return 0;
 }

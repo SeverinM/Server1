@@ -70,12 +70,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(ProjectDir)bin</OutDir>
-    <IntDir>$(ProjectDir)bin</IntDir>
+    <OutDir>$(ProjectDir)bin/</OutDir>
+    <IntDir>$(ProjectDir)bin/</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(ProjectDir)bin</OutDir>
-    <IntDir>$(ProjectDir)bin</IntDir>
+    <OutDir>$(ProjectDir)bin/</OutDir>
+    <IntDir>$(ProjectDir)bin/</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -137,6 +137,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="src\NetFix.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\NetFix.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
