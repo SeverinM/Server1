@@ -15,9 +15,10 @@ int main()
 
 	while (true)
 	{
-		std::this_thread::sleep_for(std::chrono::seconds(1));
+		int val = (1.0 / SERVER_FREQUENCY) * 1000;
+		std::this_thread::sleep_for(std::chrono::milliseconds(val));
 		nf->Update();
-		pM->Update(1);
+		pM->Update(val / 1000.0);
 		nI->Treat(nf->GetNextPacket());
 		nI->Treat(pM->GetNextPacket());
 	}

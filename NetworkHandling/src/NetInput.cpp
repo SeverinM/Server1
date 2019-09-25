@@ -5,6 +5,11 @@ void NetInput::Treat(PlayerPacket* packet)
 {
 	if (packet != nullptr)
 	{
-		std::cout << packet->content << " : " << packet->protocol <<  std::endl;
+		std::string protStr = (packet->protocol == NetworkProtocol::TCP ? "TCP" : "UDP");
+		std::cout << packet->content << " : " << protStr << " : " << std::endl;
+		if (packet->content == CONNECT_KEY)
+		{
+			std::cout << "Lobby" << std::endl;
+		}
 	}
 }

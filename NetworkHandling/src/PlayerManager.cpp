@@ -4,8 +4,6 @@
 
 using namespace sf;
 
-class NetFix;
-
 void PlayerManager::Update(float elapsed)
 {
 	if (_alivesPlayer.size() == 0)
@@ -13,45 +11,35 @@ void PlayerManager::Update(float elapsed)
 		return;
 	}
 
-	std::list<std::pair<TcpSocket*, float>>::iterator it = _alivesPlayer.begin();
-	for (; it != _alivesPlayer.end() ;)
+	std::list<Player *>::iterator it = _alivesPlayer.begin();
+	while (_alivesPlayer.size() > 0 && it != _alivesPlayer.end())
 	{
-		it->second -= elapsed;
-		if ((*it).second <= 0)
+		Player* plyr = (*it);
+
+		//Timeout verification
+		if (plyr->TimeoutUpdate(elapsed))
 		{
-			TcpSocket* sock = it->first;
-			sock->disconnect();
-			it = _alivesPlayer.erase(it);
-			delete sock;
+			std::cout << plyr->getSocket()->getRemoteAddress() << " disconnected " << std::endl;
+			_alivesPlayer.erase(it);
+			plyr->Kill();
+			delete plyr;
+			continue;
 		}
 		else
 		{
-			char data[100];
-			std::size_t received;
-			if ((*it).first->receive(data, 100, received) == Socket::Done)
-			{
-				(*it).second = DEFAULT_TIMEOUT;
-				PlayerPacket* pp = new PlayerPacket();
-				pp->content = std::string(data).substr(0, received);
-				pp->from = it->first->getRemoteAddress();
-				pp->protocol = NetworkProtocol::TCP;
-				pp->receivedAt = 0;
-				pp->sentAt = 0;
-				packets.push(pp);
-			}
-			++it;
+			it++;
+		}
+
+		PlayerPacket* pp = plyr->GetNextReceivedPacket();
+		if (pp != nullptr)
+		{
+			packets.push(pp);
 		}
 	}
 }
 
 bool PlayerManager::IsConnected(sf::IpAddress from)
 {
-	std::list<std::pair<TcpSocket*, float>>::iterator it = _alivesPlayer.begin();
-	for (; it != _alivesPlayer.end();)
-	{
-		if (from == it->first->getRemoteAddress())
-			return true;
-	}
 	return false;
 }
 
@@ -63,4 +51,19 @@ PlayerPacket* PlayerManager::GetNextPacket()
 	PlayerPacket* pp = packets.front();
 	packets.pop();
 	return pp;
+}
+
+void PlayerManager::AddPlayer(sf::TcpSocket* sock)
+{
+	Player* player = new Player(sock);
+	_alivesPlayer.push_back(player);
+
+	PlayerPacket* pp = new PlayerPacket();
+	pp->protocol = NetworkProtocol::TCP;
+	pp->from = sock->getRemoteAddress();
+	pp->port = sock->getLocalPort();
+	pp->receivedAt = 0;
+	pp->sentAt = 0;
+	pp->content = CONNECT_KEY;
+	packets.push(pp);
 }

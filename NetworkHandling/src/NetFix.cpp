@@ -38,22 +38,20 @@ void NetFix::Update()
 
 	if (_socket.receive(data, PACKET_SIZE, received,sender,port) == Socket::Done)
 	{
-		if (_manager->IsConnected(sender))
-		{
-			PlayerPacket* packet = new PlayerPacket();
-			packet->from = sender;
-			packet->receivedAt = 0;
-			packet->sentAt = 0;
-			packet->content = std::string(data).substr(0, received);
-			packet->protocol = NetworkProtocol::UDP;
-			AddPacket(packet);
-		}
+		PlayerPacket* packet = new PlayerPacket();
+		packet->from = sender;
+		packet->receivedAt = 0;
+		packet->sentAt = 0;
+		packet->content = std::string(data).substr(0, received);
+		packet->protocol = NetworkProtocol::UDP;
+		AddPacket(packet);
 	}
 
 	//Someone accepted ?
 	TcpSocket* client = new TcpSocket();
 	if (_listener.accept(*client) == Socket::Done)
 	{
+		std::cout << "Accept : " << client->getRemoteAddress() << std::endl;
 		client->setBlocking(false);
 		_manager->AddPlayer(client);
 	}
