@@ -12,10 +12,7 @@ using namespace std;
 #define TIMEOUT_MESSAGE "Timeout ! Disconnect"
 #define CONNECT_KEY "LBYCONN"
 
-class Utils
-{
-
-};
+class Player;
 
 enum NetworkProtocol
 {
@@ -25,10 +22,10 @@ enum NetworkProtocol
 
 struct PlayerPacket
 {
-	sf::IpAddress from;
 	string content;
 	long sentAt;
 	long receivedAt;
 	NetworkProtocol protocol;
 	short port;
+	int idPlayer;
 };

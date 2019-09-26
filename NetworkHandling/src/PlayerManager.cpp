@@ -4,6 +4,8 @@
 
 using namespace sf;
 
+int PlayerManager::_ID = 0;
+
 void PlayerManager::Update(float elapsed)
 {
 	if (_alivesPlayer.size() == 0)
@@ -11,10 +13,10 @@ void PlayerManager::Update(float elapsed)
 		return;
 	}
 
-	std::list<Player *>::iterator it = _alivesPlayer.begin();
+	std::map<int, Player *>::iterator it = _alivesPlayer.begin();
 	while (_alivesPlayer.size() > 0 && it != _alivesPlayer.end())
 	{
-		Player* plyr = (*it);
+		Player* plyr = it->second;
 
 		//Timeout verification
 		if (plyr->TimeoutUpdate(elapsed))
@@ -33,7 +35,7 @@ void PlayerManager::Update(float elapsed)
 		PlayerPacket* pp = plyr->GetNextReceivedPacket();
 		if (pp != nullptr)
 		{
-			packets.push(pp);
+			_packets.push(pp);
 		}
 	}
 }
@@ -45,25 +47,40 @@ bool PlayerManager::IsConnected(sf::IpAddress from)
 
 PlayerPacket* PlayerManager::GetNextPacket()
 {
-	if (packets.size() == 0)
+	if (_packets.size() == 0)
 		return nullptr;
 
-	PlayerPacket* pp = packets.front();
-	packets.pop();
+	PlayerPacket* pp = _packets.front();
+	_packets.pop();
 	return pp;
 }
 
 void PlayerManager::AddPlayer(sf::TcpSocket* sock)
 {
+	std::cout << "New Player" << std::endl;
 	Player* player = new Player(sock);
-	_alivesPlayer.push_back(player);
+	_alivesPlayer[PlayerManager::_ID] = player;
 
 	PlayerPacket* pp = new PlayerPacket();
 	pp->protocol = NetworkProtocol::TCP;
-	pp->from = sock->getRemoteAddress();
+	pp->idPlayer = PlayerManager::_ID;
 	pp->port = sock->getLocalPort();
 	pp->receivedAt = 0;
 	pp->sentAt = 0;
 	pp->content = CONNECT_KEY;
-	packets.push(pp);
+	_packets.push(pp);
+	string data = std::to_string(PlayerManager::_ID);
+	PlayerManager::_ID++;
+	sock->send(data.c_str(), 100);
+}
+
+void PlayerManager::RemovePlayer(Player* player)
+{
+	/*std::map<int,  Player* > ::iterator it;
+	it = std::find(_alivesPlayer.begin(), _alivesPlayer.end(), player);
+	if (it != _alivesPlayer.end())
+	{
+		it->second->Kill();
+		_alivesPlayer.erase(it);
+	}*/
 }

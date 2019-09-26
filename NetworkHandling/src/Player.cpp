@@ -28,7 +28,6 @@ PlayerPacket* Player::GetNextReceivedPacket()
 		pp->protocol = NetworkProtocol::TCP;
 		pp->receivedAt = 0;
 		pp->sentAt = 0;
-		pp->from = _connection->getRemoteAddress();
 		return pp;
 	}
 
@@ -57,9 +56,16 @@ void Player::ResetTimeout()
 void Player::Kill()
 {
 	std::list<PlayerObservable*>::iterator it;
+
+	//Unsub everyone on disconnect
 	for (it = observers.begin(); it != observers.end(); it++)
 	{
 		(*it)->PlayerLeft((*this));
 	}
 	_connection->disconnect();
+}
+
+bool Player::operator<(const Player& Player)
+{
+	return _id < Player.GetId();
 }

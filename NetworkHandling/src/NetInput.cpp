@@ -9,7 +9,6 @@ void NetInput::Treat(PlayerPacket* packet)
 		std::cout << packet->content << " : " << protStr << " : " << std::endl;
 		if (packet->content == CONNECT_KEY)
 		{
-			std::cout << "Lobby" << std::endl;
 		}
 	}
 }

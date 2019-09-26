@@ -1,5 +1,5 @@
 #pragma once
-#include <list>
+#include <map>
 #include "SFML/Network.hpp"
 #include <algorithm>
 #include <stdexcept>
@@ -12,11 +12,13 @@
 class PlayerManager
 {
 	protected:
-		std::list<Player *> _alivesPlayer;
-		queue<PlayerPacket*> packets;
+		std::map<int, Player*> _alivesPlayer;
+		queue<PlayerPacket*> _packets;
+		static int _ID;
 
 	public:
 		void AddPlayer(sf::TcpSocket* sock);
+		void RemovePlayer(Player* player);
 		PlayerPacket* GetNextPacket();
 		void Update(float elapsed);
 		bool IsConnected(sf::IpAddress from);

@@ -30,10 +30,10 @@
     <ClCompile Include="src\SynchronisationClock.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="src\Lobby.cpp">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClCompile>
     <ClCompile Include="src\Player.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Lobby.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
   </ItemGroup>
