@@ -7,7 +7,7 @@
 #include "Utils.h"
 
 //forward declaration
-class PlayerPacket;
+struct PlayerPacket;
 class PlayerObservable;
 
 class Player

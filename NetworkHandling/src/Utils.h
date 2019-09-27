@@ -27,6 +27,6 @@ struct PlayerPacket
 	long sentAt;
 	long receivedAt;
 	NetworkProtocol protocol;
-	short port;
-	int idPlayer;
+	short port = 0;
+	unsigned int idPlayer = 0;
 };
