@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include "Utils.h"
+#include <sstream>
 
 NetFix* NetFix::_instance = nullptr;
 
@@ -41,9 +42,14 @@ void NetFix::Update()
 		PlayerPacket* packet = new PlayerPacket();
 		packet->receivedAt = 0;
 		packet->sentAt = 0;
-		packet->content = std::string(data).substr(0, received);
+		packet->content = std::string(data).substr(BYTES_ID * 2, received);
 		packet->protocol = NetworkProtocol::UDP;
-		AddPacket(packet);
+
+		char idSample[BYTES_ID * 2];
+		memcpy(idSample, &data[0], BYTES_ID * 2);
+		unsigned int id = std::stoul(idSample, nullptr, 16);
+		packet->idPlayer = id;
+		_packetBuffer.push(packet);
 	}
 
 	//Someone accepted ?

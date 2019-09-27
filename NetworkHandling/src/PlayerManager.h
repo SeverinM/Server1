@@ -7,6 +7,7 @@
 #include "Utils.h"
 #include <queue>
 #include "Player.h"
+#include <stack>
 
 //Keep a tcp flux of connected players
 class PlayerManager
@@ -15,11 +16,13 @@ class PlayerManager
 		std::map<int, Player*> _alivesPlayer;
 		queue<PlayerPacket*> _packets;
 		static int _ID;
+		stack<int> _idRecycle;
 
 	public:
 		void AddPlayer(sf::TcpSocket* sock);
-		void RemovePlayer(Player* player);
+		void RemovePlayer(int id);
 		PlayerPacket* GetNextPacket();
 		void Update(float elapsed);
 		bool IsConnected(sf::IpAddress from);
+		Player* FindPlayer(int id);
 };

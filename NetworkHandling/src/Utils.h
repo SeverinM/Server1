@@ -11,6 +11,7 @@ using namespace std;
 #define SERVER_FREQUENCY 2.0
 #define TIMEOUT_MESSAGE "Timeout ! Disconnect"
 #define CONNECT_KEY "LBYCONN"
+#define BYTES_ID 3
 
 class Player;
 

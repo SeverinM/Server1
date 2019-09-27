@@ -59,7 +59,17 @@ void PlayerManager::AddPlayer(sf::TcpSocket* sock)
 {
 	std::cout << "New Player" << std::endl;
 	Player* player = new Player(sock);
-	_alivesPlayer[PlayerManager::_ID] = player;
+
+	int tempId;
+	if (_idRecycle.size() == 0)
+		tempId = PlayerManager::_ID++;
+	else
+	{
+		tempId = _idRecycle.top();
+		_idRecycle.pop();
+	}
+
+	_alivesPlayer[tempId] = player;
 
 	PlayerPacket* pp = new PlayerPacket();
 	pp->protocol = NetworkProtocol::TCP;
@@ -69,18 +79,29 @@ void PlayerManager::AddPlayer(sf::TcpSocket* sock)
 	pp->sentAt = 0;
 	pp->content = CONNECT_KEY;
 	_packets.push(pp);
-	string data = std::to_string(PlayerManager::_ID);
-	PlayerManager::_ID++;
+	string data = std::to_string(tempId);
 	sock->send(data.c_str(), 100);
 }
 
-void PlayerManager::RemovePlayer(Player* player)
+void PlayerManager::RemovePlayer(int id)
 {
-	/*std::map<int,  Player* > ::iterator it;
-	it = std::find(_alivesPlayer.begin(), _alivesPlayer.end(), player);
+	std::map<int,  Player* >::iterator it;
+	it = _alivesPlayer.find(id);
 	if (it != _alivesPlayer.end())
 	{
 		it->second->Kill();
 		_alivesPlayer.erase(it);
-	}*/
+		_idRecycle.push(id);
+	}
+}
+
+Player* PlayerManager::FindPlayer(int id)
+{
+	std::map<int, Player* >::iterator it;
+	it = _alivesPlayer.find(id);
+	if (it != _alivesPlayer.end())
+	{
+		return it->second;
+	}
+	return nullptr
 }

@@ -8,9 +8,10 @@
 int main()
 {
 	NetFix* nf = NetFix::GetInstance();
-	NetInput* nI = new NetInput();
 
 	PlayerManager* pM = new PlayerManager();
+	NetInput* nI = new NetInput(pM);
+
 	nf->Init(54000, pM);
 
 	while (true)
