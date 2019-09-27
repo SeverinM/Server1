@@ -25,6 +25,9 @@ int main()
 	char dataId[20];
 	memcpy(dataId, &data[0], 6);
 
+	char alive = 'a';
+	while (sock.send(&alive, 1)) { std::this_thread::sleep_for(std::chrono::milliseconds(500)); }
+
 	std::cin >> ip;
 
 	return 0;

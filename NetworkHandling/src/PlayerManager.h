@@ -16,7 +16,6 @@ class PlayerManager
 		std::map<int, Player*> _alivesPlayer;
 		queue<PlayerPacket*> _packets;
 		static int _ID;
-		stack<int> _idRecycle;
 
 	public:
 		void AddPlayer(sf::TcpSocket* sock);

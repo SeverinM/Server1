@@ -45,6 +45,7 @@ void NetFix::Update()
 		packet->content = std::string(data).substr(BYTES_ID * 2, received);
 		packet->protocol = NetworkProtocol::UDP;
 
+		//Parse the id
 		char idSample[BYTES_ID * 2];
 		memcpy(idSample, &data[0], BYTES_ID * 2);
 		unsigned int id = std::stoul(idSample, nullptr, 16);

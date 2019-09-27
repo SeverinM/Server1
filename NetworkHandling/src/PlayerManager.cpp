@@ -61,14 +61,7 @@ void PlayerManager::AddPlayer(sf::TcpSocket* sock)
 	Player* player = new Player(sock);
 
 	int tempId;
-	if (_idRecycle.size() == 0)
-		tempId = PlayerManager::_ID++;
-	else
-	{
-		tempId = _idRecycle.top();
-		_idRecycle.pop();
-	}
-	tempId = 15;
+	tempId = ++PlayerManager::_ID;
 
 	_alivesPlayer[tempId] = player;
 
@@ -93,7 +86,6 @@ void PlayerManager::RemovePlayer(int id)
 	{
 		it->second->Kill();
 		_alivesPlayer.erase(it);
-		_idRecycle.push(id);
 	}
 }
 
