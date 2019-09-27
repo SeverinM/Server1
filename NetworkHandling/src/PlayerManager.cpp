@@ -1,6 +1,6 @@
 #pragma once
 #include "PlayerManager.h"
-#include <string>
+#include <sstream>
 
 using namespace sf;
 
@@ -68,19 +68,21 @@ void PlayerManager::AddPlayer(sf::TcpSocket* sock)
 		tempId = _idRecycle.top();
 		_idRecycle.pop();
 	}
+	tempId = 15;
 
 	_alivesPlayer[tempId] = player;
 
 	PlayerPacket* pp = new PlayerPacket();
 	pp->protocol = NetworkProtocol::TCP;
-	pp->idPlayer = PlayerManager::_ID;
+	pp->idPlayer = tempId;
 	pp->port = sock->getLocalPort();
 	pp->receivedAt = 0;
 	pp->sentAt = 0;
 	pp->content = CONNECT_KEY;
 	_packets.push(pp);
-	string data = std::to_string(tempId);
-	sock->send(data.c_str(), 100);
+	std::stringstream ss;
+	ss << std::hex << tempId;
+	sock->send(ss.str().c_str(), 100);
 }
 
 void PlayerManager::RemovePlayer(int id)
