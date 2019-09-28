@@ -5,9 +5,8 @@ void NetInput::Treat(PlayerPacket* packet)
 {
 	if (packet != nullptr)
 	{
-		if (packet->content == CONNECT_KEY)
-		{
-		}
+		std::cout << packet->content << std::endl;
+		std::cout << packet->content.size() << std::endl;
 	}
 }
 

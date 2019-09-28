@@ -7,7 +7,7 @@ using namespace std;
 
 #define PACKET_SIZE 100
 #define KEEP_ALIVE "al"
-#define DEFAULT_TIMEOUT 5
+#define DEFAULT_TIMEOUT 100
 #define SERVER_FREQUENCY 2.0
 #define TIMEOUT_MESSAGE "Timeout ! Disconnect"
 #define CONNECT_KEY "LBYCONN"
@@ -23,10 +23,10 @@ enum NetworkProtocol
 
 struct PlayerPacket
 {
+	unsigned int idPlayer;
 	string content;
 	long sentAt;
 	long receivedAt;
 	NetworkProtocol protocol;
 	short port = 0;
-	unsigned int idPlayer = 0;
 };

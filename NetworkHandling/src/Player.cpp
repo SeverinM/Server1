@@ -1,9 +1,10 @@
 #include "Player.h"
+#include <iostream>
 
 Player::Player(sf::TcpSocket* sock)
 {
 	_connection = sock;
-	_timeout = 5;
+	_timeout = DEFAULT_TIMEOUT;
 }
 
 bool Player::TimeoutUpdate(float elapsed)
@@ -50,7 +51,7 @@ void Player::RemoveObserver(PlayerObservable* obs)
 
 void Player::ResetTimeout()
 {
-	_timeout = 5;
+	_timeout = DEFAULT_TIMEOUT;
 }
 
 void Player::Kill()

@@ -42,22 +42,25 @@ void NetFix::Update()
 		PlayerPacket* packet = new PlayerPacket();
 		packet->receivedAt = 0;
 		packet->sentAt = 0;
-		packet->content = std::string(data).substr(BYTES_ID * 2, received);
+		packet->content = std::string(data).substr(BYTES_ID * 2, received - (BYTES_ID * 2) - 1);
 		packet->protocol = NetworkProtocol::UDP;
 
 		//Parse the id
 		char idSample[BYTES_ID * 2];
 		memcpy(idSample, &data[0], BYTES_ID * 2);
 		unsigned int id = std::stoul(idSample, nullptr, 16);
-		packet->idPlayer = id;
 
 		//Let pass only if a player exist
-		if (_manager->FindPlayer(id) != nullptr)
+		Player* player = _manager->FindPlayer(id);
+		if (player != nullptr)
 		{
+			packet->idPlayer = id;
+			player->ResetTimeout();
 			_packetBuffer.push(packet);
 		}
 		else
 		{
+			std::cout << "Rejected" << std::endl;
 			delete packet;
 		}
 	}

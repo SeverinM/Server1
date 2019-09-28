@@ -27,14 +27,13 @@ void PlayerManager::Update(float elapsed)
 			delete plyr;
 			continue;
 		}
-		else
-		{
-			it++;
-		}
+		it++;
 
+		//Received something via TCP
 		PlayerPacket* pp = plyr->GetNextReceivedPacket();
 		if (pp != nullptr)
 		{
+			plyr->ResetTimeout();
 			_packets.push(pp);
 		}
 	}
@@ -72,12 +71,12 @@ void PlayerManager::AddPlayer(sf::TcpSocket* sock)
 	_packets.push(pp);
 	std::stringstream ss;
 	ss << std::hex << tempId;
-	while (ss.str().size() < BYTES_ID * 2)
+	string idStr = ss.str();
+	while (idStr.size() < BYTES_ID * 2)
 	{
-		ss << "0";
+		idStr.insert(0, "0");
 	}
-
-	sock->send(ss.str().c_str(), 100);
+	sock->send(idStr.c_str(), 100);
 }
 
 void PlayerManager::RemovePlayer(unsigned int id)
