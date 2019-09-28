@@ -13,7 +13,7 @@ void PlayerManager::Update(float elapsed)
 		return;
 	}
 
-	std::map<int, Player *>::iterator it = _alivesPlayer.begin();
+	std::map<unsigned int, Player *>::iterator it = _alivesPlayer.begin();
 	while (_alivesPlayer.size() > 0 && it != _alivesPlayer.end())
 	{
 		Player* plyr = it->second;
@@ -59,12 +59,9 @@ void PlayerManager::AddPlayer(sf::TcpSocket* sock)
 {
 	std::cout << "New Player" << std::endl;
 	Player* player = new Player(sock);
-
 	int tempId;
 	tempId = ++PlayerManager::_ID;
-
 	_alivesPlayer[tempId] = player;
-
 	PlayerPacket* pp = new PlayerPacket();
 	pp->protocol = NetworkProtocol::TCP;
 	pp->idPlayer = tempId;
@@ -75,12 +72,17 @@ void PlayerManager::AddPlayer(sf::TcpSocket* sock)
 	_packets.push(pp);
 	std::stringstream ss;
 	ss << std::hex << tempId;
+	while (ss.str().size() < BYTES_ID * 2)
+	{
+		ss << "0";
+	}
+
 	sock->send(ss.str().c_str(), 100);
 }
 
-void PlayerManager::RemovePlayer(int id)
+void PlayerManager::RemovePlayer(unsigned int id)
 {
-	std::map<int,  Player* >::iterator it;
+	std::map<unsigned int,  Player* >::iterator it;
 	it = _alivesPlayer.find(id);
 	if (it != _alivesPlayer.end())
 	{
@@ -89,9 +91,9 @@ void PlayerManager::RemovePlayer(int id)
 	}
 }
 
-Player* PlayerManager::FindPlayer(int id)
+Player* PlayerManager::FindPlayer(unsigned int id)
 {
-	std::map<int, Player* >::iterator it;
+	std::map<unsigned int, Player* >::iterator it;
 	it = _alivesPlayer.find(id);
 	if (it != _alivesPlayer.end())
 	{

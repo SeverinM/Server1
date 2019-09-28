@@ -13,15 +13,15 @@
 class PlayerManager
 {
 	protected:
-		std::map<int, Player*> _alivesPlayer;
+		std::map<unsigned int, Player*> _alivesPlayer;
 		queue<PlayerPacket*> _packets;
 		static int _ID;
 
 	public:
 		void AddPlayer(sf::TcpSocket* sock);
-		void RemovePlayer(int id);
+		void RemovePlayer(unsigned int id);
 		PlayerPacket* GetNextPacket();
 		void Update(float elapsed);
 		bool IsConnected(sf::IpAddress from);
-		Player* FindPlayer(int id);
+		Player* FindPlayer(unsigned int id);
 };

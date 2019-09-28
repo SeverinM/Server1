@@ -50,7 +50,16 @@ void NetFix::Update()
 		memcpy(idSample, &data[0], BYTES_ID * 2);
 		unsigned int id = std::stoul(idSample, nullptr, 16);
 		packet->idPlayer = id;
-		_packetBuffer.push(packet);
+
+		//Let pass only if a player exist
+		if (_manager->FindPlayer(id) != nullptr)
+		{
+			_packetBuffer.push(packet);
+		}
+		else
+		{
+			delete packet;
+		}
 	}
 
 	//Someone accepted ?
