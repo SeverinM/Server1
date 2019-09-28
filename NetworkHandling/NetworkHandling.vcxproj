@@ -144,6 +144,7 @@
     <ClCompile Include="src\NetInput.cpp" />
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\PlayerManager.cpp" />
+    <ClCompile Include="src\Room.cpp" />
     <ClCompile Include="src\SynchronisationClock.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -10,6 +10,6 @@ class NetInput
 		NetInput(PlayerManager* pM);
 
 	protected :
-		Lobby _allLobies[3];
+		Lobby _lobby;
 		PlayerManager * _pM;
 };

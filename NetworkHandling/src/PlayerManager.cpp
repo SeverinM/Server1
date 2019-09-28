@@ -5,6 +5,7 @@
 using namespace sf;
 
 int PlayerManager::_ID = 0;
+PlayerManager* PlayerManager::_instance = nullptr;
 
 void PlayerManager::Update(float elapsed)
 {
@@ -22,8 +23,8 @@ void PlayerManager::Update(float elapsed)
 		if (plyr->TimeoutUpdate(elapsed))
 		{
 			std::cout << plyr->getSocket()->getRemoteAddress() << " disconnected " << std::endl;
+			Kill(it->first);
 			_alivesPlayer.erase(it);
-			plyr->Kill();
 			delete plyr;
 			continue;
 		}
@@ -33,6 +34,7 @@ void PlayerManager::Update(float elapsed)
 		PlayerPacket* pp = plyr->GetNextReceivedPacket();
 		if (pp != nullptr)
 		{
+			pp->idPlayer = it->first;
 			plyr->ResetTimeout();
 			_packets.push(pp);
 		}
@@ -61,14 +63,6 @@ void PlayerManager::AddPlayer(sf::TcpSocket* sock)
 	int tempId;
 	tempId = ++PlayerManager::_ID;
 	_alivesPlayer[tempId] = player;
-	PlayerPacket* pp = new PlayerPacket();
-	pp->protocol = NetworkProtocol::TCP;
-	pp->idPlayer = tempId;
-	pp->port = sock->getLocalPort();
-	pp->receivedAt = 0;
-	pp->sentAt = 0;
-	pp->content = CONNECT_KEY;
-	_packets.push(pp);
 	std::stringstream ss;
 	ss << std::hex << tempId;
 	string idStr = ss.str();
@@ -85,7 +79,7 @@ void PlayerManager::RemovePlayer(unsigned int id)
 	it = _alivesPlayer.find(id);
 	if (it != _alivesPlayer.end())
 	{
-		it->second->Kill();
+		Kill(it);
 		_alivesPlayer.erase(it);
 	}
 }
@@ -99,4 +93,33 @@ Player* PlayerManager::FindPlayer(unsigned int id)
 		return it->second;
 	}
 	return nullptr;
+}
+
+PlayerManager* PlayerManager::GetInstance()
+{
+	if (_instance == nullptr)
+	{
+		return new PlayerManager();
+	}
+	return _instance;
+}
+
+PlayerManager::PlayerManager()
+{
+	_instance = this;
+}
+
+void PlayerManager::Kill(unsigned int id)
+{
+	Player* player = FindPlayer(id);
+	if (player != nullptr)
+	{
+		player->NotifyLeave(id);
+	}
+}
+
+void PlayerManager::Kill(std::map<unsigned int, Player*>::iterator it)
+{
+	it->second->NotifyLeave(it->first);
+	delete it->second;
 }

@@ -6,5 +6,5 @@ class Player;
 class PlayerObservable
 {
 	public:
-		virtual void PlayerLeft(Player plyr) = 0;
+		virtual void PlayerLeft(unsigned int plyr) = 0;
 };

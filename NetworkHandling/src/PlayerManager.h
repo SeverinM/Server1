@@ -12,6 +12,10 @@
 //Keep a tcp flux of connected players
 class PlayerManager
 {
+	private:
+		static PlayerManager* _instance;
+		PlayerManager();
+
 	protected:
 		std::map<unsigned int, Player*> _alivesPlayer;
 		queue<PlayerPacket*> _packets;
@@ -24,4 +28,7 @@ class PlayerManager
 		void Update(float elapsed);
 		bool IsConnected(sf::IpAddress from);
 		Player* FindPlayer(unsigned int id);
+		void Kill(unsigned int id);
+		void Kill(std::map<unsigned int, Player*>::iterator it);
+		static PlayerManager* GetInstance();
 };

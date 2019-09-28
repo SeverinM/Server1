@@ -9,7 +9,7 @@ int main()
 {
 	NetFix* nf = NetFix::GetInstance();
 
-	PlayerManager* pM = new PlayerManager();
+	PlayerManager* pM = PlayerManager::GetInstance();
 	NetInput* nI = new NetInput(pM);
 
 	nf->Init(54000, pM);

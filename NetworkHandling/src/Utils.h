@@ -12,6 +12,7 @@ using namespace std;
 #define TIMEOUT_MESSAGE "Timeout ! Disconnect"
 #define CONNECT_KEY "LBYCONN"
 #define BYTES_ID 3
+#define CREATE_ROOM "CRTROOM"
 
 class Player;
 

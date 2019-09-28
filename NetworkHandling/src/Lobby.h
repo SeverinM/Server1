@@ -7,10 +7,11 @@
 class Lobby : public PlayerObservable
 {
 public:
-	void PlayerLeft(Player plyr);
-	void AddPlayer(Player* plyr);
+	void PlayerLeft(unsigned int plyr);
+	void AddPlayer(unsigned int plyr);
+	Room * CreateRoom(unsigned int nbPlayer);
 
 protected:
-	list<Player*> _players;
+	list<unsigned int> _players;
 	list<Room*> _rooms;
 };

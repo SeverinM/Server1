@@ -54,19 +54,13 @@ void Player::ResetTimeout()
 	_timeout = DEFAULT_TIMEOUT;
 }
 
-void Player::Kill()
+void Player::NotifyLeave(unsigned int id)
 {
+	_connection->disconnect();
 	std::list<PlayerObservable*>::iterator it;
-
 	//Unsub everyone on disconnect
 	for (it = observers.begin(); it != observers.end(); it++)
 	{
-		(*it)->PlayerLeft((*this));
+		(*it)->PlayerLeft(id);
 	}
-	_connection->disconnect();
-}
-
-bool Player::operator<(const Player& Player)
-{
-	return _id < Player.GetId();
 }
