@@ -4,14 +4,16 @@
 #include "PlayerObservable.h"
 #include "Room.h"
 
-class Lobby : public PlayerObservable
+//Contains a list of room 
+class Lobby : public PlayerPlace
 {
 public:
-	void PlayerLeft(unsigned int plyr);
-	void AddPlayer(unsigned int plyr);
+	void PlayerLeft(Player * player) override;
+	void PlayerEnter(Player* player) override;
+	bool RequestEnter(Player * player) override;
 	Room * CreateRoom(unsigned int nbPlayer);
 
 protected:
-	list<unsigned int> _players;
+	std::list<Player*> _allPlayers;
 	list<Room*> _rooms;
 };

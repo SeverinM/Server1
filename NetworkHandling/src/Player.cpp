@@ -35,32 +35,33 @@ PlayerPacket* Player::GetNextReceivedPacket()
 	return nullptr;
 }
 
-void Player::AddObserver(PlayerObservable* obs)
-{
-	observers.push_back(obs);
-}
-
-void Player::RemoveObserver(PlayerObservable* obs)
-{
-	std::list<PlayerObservable*>::iterator it = std::find(observers.begin(), observers.end(), obs);
-	if (it != observers.end())
-	{
-		observers.erase(it);
-	}
-}
-
 void Player::ResetTimeout()
 {
 	_timeout = DEFAULT_TIMEOUT;
 }
 
-void Player::NotifyLeave(unsigned int id)
+void Player::SendUDP(char* toSend, unsigned int size)
 {
-	_connection->disconnect();
-	std::list<PlayerObservable*>::iterator it;
-	//Unsub everyone on disconnect
-	for (it = observers.begin(); it != observers.end(); it++)
+	sf::UdpSocket* udp = new sf::UdpSocket();
+	udp->bind(54000);
+	udp->send(toSend, size, _connection->getRemoteAddress(), 54000);
+}
+
+void Player::ChangePlace(PlayerPlace* pp)
+{
+	if (_place != NULL)
 	{
-		(*it)->PlayerLeft(id);
+		_place->PlayerLeft(this);
 	}
+
+	if (pp != NULL)
+	{
+		pp->PlayerEnter(this);
+	}
+	else
+	{
+		_connection->disconnect();
+	}
+
+	_place = pp;
 }

@@ -23,9 +23,7 @@ void PlayerManager::Update(float elapsed)
 		if (plyr->TimeoutUpdate(elapsed))
 		{
 			std::cout << plyr->getSocket()->getRemoteAddress() << " disconnected " << std::endl;
-			Kill(it->first);
-			_alivesPlayer.erase(it);
-			delete plyr;
+			Kill(it);
 			continue;
 		}
 		it++;
@@ -34,7 +32,7 @@ void PlayerManager::Update(float elapsed)
 		PlayerPacket* pp = plyr->GetNextReceivedPacket();
 		if (pp != nullptr)
 		{
-			pp->idPlayer = it->first;
+			pp->player = plyr;
 			plyr->ResetTimeout();
 			_packets.push(pp);
 		}
@@ -109,17 +107,9 @@ PlayerManager::PlayerManager()
 	_instance = this;
 }
 
-void PlayerManager::Kill(unsigned int id)
-{
-	Player* player = FindPlayer(id);
-	if (player != nullptr)
-	{
-		player->NotifyLeave(id);
-	}
-}
-
 void PlayerManager::Kill(std::map<unsigned int, Player*>::iterator it)
 {
-	it->second->NotifyLeave(it->first);
-	delete it->second;
+	_alivesPlayer.erase(it);
+	it->second->ChangePlace(NULL);
+	delete(it->second);
 }

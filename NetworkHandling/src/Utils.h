@@ -13,6 +13,7 @@ using namespace std;
 #define CONNECT_KEY "LBYCONN"
 #define BYTES_ID 3
 #define CREATE_ROOM "CRTROOM"
+#define LEFT_LOBBY "LBYLEFT"
 
 class Player;
 
@@ -24,7 +25,7 @@ enum NetworkProtocol
 
 struct PlayerPacket
 {
-	unsigned int idPlayer;
+	Player* player;
 	string content;
 	long sentAt;
 	long receivedAt;

@@ -8,7 +8,7 @@
 
 //forward declaration
 struct PlayerPacket;
-class PlayerObservable;
+class PlayerPlace;
 
 enum PlayerState
 {
@@ -24,7 +24,7 @@ class Player
 	private:
 		sf::TcpSocket* _connection;
 		float _timeout;
-		std::list<PlayerObservable*> observers;
+		PlayerPlace* _place = NULL;
 		PlayerState _state = PlayerState::InServer;
 
 	public:
@@ -34,8 +34,7 @@ class Player
 		inline void SetPlayerState(PlayerState newState) { _state = newState; }
 		bool TimeoutUpdate(float elapsed);
 		PlayerPacket* GetNextReceivedPacket();
-		void AddObserver(PlayerObservable* obs);
-		void RemoveObserver(PlayerObservable* obs);
 		void ResetTimeout();
-		void NotifyLeave(unsigned int id);
+		void SendUDP(char* toSend, unsigned int size);
+		void ChangePlace(PlayerPlace* pp);
 };

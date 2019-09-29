@@ -54,7 +54,7 @@ void NetFix::Update()
 		Player* player = _manager->FindPlayer(id);
 		if (player != nullptr)
 		{
-			packet->idPlayer = id;
+			packet->player = player;
 			player->ResetTimeout();
 			_packetBuffer.push(packet);
 		}

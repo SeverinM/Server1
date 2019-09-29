@@ -1,20 +1,20 @@
 #include "Lobby.h"
 #include "PlayerManager.h"
 
-void Lobby::PlayerLeft(unsigned int plyr)
+void Lobby::PlayerLeft( Player * player)
 {
-
+	std::list<Player*>::iterator it = std::find(_allPlayers.begin(), _allPlayers.end(), player);
+	if (it != _allPlayers.end())
+	{
+		_allPlayers.erase(it);
+	}
 }
 
-void Lobby::AddPlayer(unsigned int plyr)
+void Lobby::PlayerEnter(Player* player)
 {
-	_players.push_back(plyr);
-	Player* player = PlayerManager::GetInstance()->FindPlayer(plyr);
-	if (player != nullptr)
-	{
-		player->AddObserver(this);
-		player->SetPlayerState(PlayerState::InLobby);
-	}
+	std::cout << "Entering lobby" << std::endl;
+	player->SetPlayerState(PlayerState::InLobby);
+	_allPlayers.push_back(player);
 }
 
 Room* Lobby::CreateRoom(unsigned int nbPlayer)
@@ -22,4 +22,9 @@ Room* Lobby::CreateRoom(unsigned int nbPlayer)
 	Room* rm = new Room(nbPlayer);
 	_rooms.push_back(rm);
 	return rm;
+}
+
+bool Lobby::RequestEnter(Player * player)
+{
+	return player->GetPlayerState() == PlayerState::InServer;
 }

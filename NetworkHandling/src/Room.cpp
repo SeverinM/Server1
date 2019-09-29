@@ -9,21 +9,23 @@ Room::Room(unsigned int nbPlayers)
 	_id = ++_ID;
 }
 
-void Room::PlayerLeft(unsigned int plyr)
+void Room::PlayerLeft(Player * player)
 {
-
+	std::list<Player*>::iterator it = std::find(_playersInRoom.begin(), _playersInRoom.end(), player);
+	if (it != _playersInRoom.end())
+	{
+		_playersInRoom.erase(it);
+	}
 }
 
-void Room::AddPlayer(unsigned int id)
+void Room::PlayerEnter( Player* player)
 {
-	_playersInRoom.push_back(id);
-	Player * player = PlayerManager::GetInstance()->FindPlayer(id);
-	if (player != nullptr && player->GetPlayerState() == PlayerState::InLobby)
-	{
-		player->SetPlayerState(PlayerState::InRoom);
-	}
-	else
-	{
-		std::cout << "Player not exist or not in lobby" << std::endl;
-	}
+	std::cout << "Entering room" << std::endl;
+	player->SetPlayerState(PlayerState::InRoom);
+	_playersInRoom.push_back(player);
+}
+
+bool Room::RequestEnter(Player * player)
+{
+	return (_maxPlayer > _playersInRoom.size() && player->GetPlayerState() == PlayerState::InLobby);
 }

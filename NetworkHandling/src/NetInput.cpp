@@ -6,16 +6,17 @@ void NetInput::Treat(PlayerPacket* packet)
 	if (packet != nullptr)
 	{
 		std::cout << packet->content << std::endl;
-		if (packet->content == CONNECT_KEY)
+		if (packet->content == CONNECT_KEY && _lobby.RequestEnter(packet->player))
 		{
-			std::cout << "Joining" << std::endl;
-			_lobby.AddPlayer(packet->idPlayer);
+			packet->player->ChangePlace(&_lobby);
 		}
 		if (packet->content == CREATE_ROOM)
 		{
 			Room* rm = _lobby.CreateRoom(2);
-			std::cout << "Room" << std::endl;
-			rm->AddPlayer(packet->idPlayer);
+			if (rm->RequestEnter(packet->player))
+			{
+				packet->player->ChangePlace(rm);
+			}
 		}
 	}
 }

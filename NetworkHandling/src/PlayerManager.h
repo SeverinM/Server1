@@ -28,7 +28,6 @@ class PlayerManager
 		void Update(float elapsed);
 		bool IsConnected(sf::IpAddress from);
 		Player* FindPlayer(unsigned int id);
-		void Kill(unsigned int id);
 		void Kill(std::map<unsigned int, Player*>::iterator it);
 		static PlayerManager* GetInstance();
 };

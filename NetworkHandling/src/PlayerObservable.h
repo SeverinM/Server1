@@ -3,8 +3,10 @@
 
 class Player;
 
-class PlayerObservable
+class PlayerPlace
 {
 	public:
-		virtual void PlayerLeft(unsigned int plyr) = 0;
+		virtual void PlayerLeft(Player * player) = 0;
+		virtual void PlayerEnter(Player* player) = 0;
+		virtual bool RequestEnter(Player* player) = 0;
 };
