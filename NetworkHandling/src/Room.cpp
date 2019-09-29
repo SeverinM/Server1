@@ -7,25 +7,21 @@ Room::Room(unsigned int nbPlayers)
 {
 	_maxPlayer = nbPlayers;
 	_id = ++_ID;
+	_roomState = new DefaultRoomState();
 }
 
 void Room::PlayerLeft(Player * player)
 {
-	std::list<Player*>::iterator it = std::find(_playersInRoom.begin(), _playersInRoom.end(), player);
-	if (it != _playersInRoom.end())
-	{
-		_playersInRoom.erase(it);
-	}
+	_roomState->PlayerLeft(player);
 }
 
-void Room::PlayerEnter( Player* player)
+void Room::PlayerEnter(Player* player)
 {
-	std::cout << "Entering room" << std::endl;
 	player->SetPlayerState(PlayerState::InRoom);
-	_playersInRoom.push_back(player);
+	_roomState->PlayerEntered(player);
 }
 
 bool Room::RequestEnter(Player * player)
 {
-	return (_maxPlayer > _playersInRoom.size() && player->GetPlayerState() == PlayerState::InLobby);
+	return (_maxPlayer > _roomState->GetSize() && player->GetPlayerState() == PlayerState::InLobby);
 }

@@ -2,7 +2,7 @@
 #include "SFML/Network.hpp"
 #include <string>
 #include <list>
-#include "PlayerObservable.h"
+#include "PlayerPlace.h"
 #include <algorithm>
 #include "Utils.h"
 
@@ -35,6 +35,7 @@ class Player
 		bool TimeoutUpdate(float elapsed);
 		PlayerPacket* GetNextReceivedPacket();
 		void ResetTimeout();
-		void SendUDP(char* toSend, unsigned int size);
+		void SendUDP(const char* toSend, unsigned int size);
 		void ChangePlace(PlayerPlace* pp);
+		~Player();
 };

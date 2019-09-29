@@ -1,7 +1,7 @@
 #pragma once
 #include "Room.h"
 #include <list>
-#include "PlayerObservable.h"
+#include "PlayerPlace.h"
 #include "Room.h"
 
 //Contains a list of room 

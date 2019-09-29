@@ -7,6 +7,12 @@ Player::Player(sf::TcpSocket* sock)
 	_timeout = DEFAULT_TIMEOUT;
 }
 
+Player::~Player()
+{
+	_connection->disconnect();
+	_place = NULL;
+}
+
 bool Player::TimeoutUpdate(float elapsed)
 {
 	_timeout -= elapsed;
@@ -40,7 +46,7 @@ void Player::ResetTimeout()
 	_timeout = DEFAULT_TIMEOUT;
 }
 
-void Player::SendUDP(char* toSend, unsigned int size)
+void Player::SendUDP(const char* toSend, unsigned int size)
 {
 	sf::UdpSocket* udp = new sf::UdpSocket();
 	udp->bind(54000);

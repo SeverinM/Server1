@@ -1,15 +1,16 @@
 #pragma once
 #include "Player.h"
-#include "PlayerObservable.h"
+#include "PlayerPlace.h"
 #include <unordered_map>
+#include "RoomState.h"
 
 class Room : public PlayerPlace
 {
 	protected:
 		unsigned int _maxPlayer;
 		unsigned int _id;
-		std::list<Player *> _playersInRoom;
 		static unsigned int _ID;
+		RoomState* _roomState;
 
 	public :
 		Room(unsigned int nbPlayers);
