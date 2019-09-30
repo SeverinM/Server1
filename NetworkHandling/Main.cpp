@@ -4,6 +4,7 @@
 #include <string>
 #include <thread>
 #include <chrono>
+#include "src/Utils.h"
 
 int main()
 {
@@ -12,7 +13,7 @@ int main()
 	PlayerManager* pM = PlayerManager::GetInstance();
 	NetInput* nI = new NetInput(pM);
 
-	nf->Init(54000, pM);
+	nf->Init(DEFAULT_PORT, pM);
 
 	while (true)
 	{

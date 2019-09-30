@@ -10,6 +10,8 @@
 struct PlayerPacket;
 class PlayerPlace;
 
+enum NetworkProtocol;
+
 enum PlayerState
 {
 	InLobby,
@@ -35,7 +37,7 @@ class Player
 		bool TimeoutUpdate(float elapsed);
 		PlayerPacket* GetNextReceivedPacket();
 		void ResetTimeout();
-		void SendUDP(const char* toSend, unsigned int size);
+		void Send(const char* data, unsigned int size, NetworkProtocol protocol);
 		void ChangePlace(PlayerPlace* pp);
 		~Player();
 };

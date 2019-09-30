@@ -21,7 +21,7 @@ void NetFix::Init(int port, PlayerManager * man)
 	_socket.setBlocking(false);
 	_listener.setBlocking(false);
 	Socket::Status st(_listener.listen(port));
-	if (_socket.bind(port) == Socket::Done && _listener.listen(port) == Socket::Done)
+	if (_socket.bind(port + 1) == Socket::Done && _listener.listen(port) == Socket::Done)
 	{
 		_isInit = true;
 		_port = port;
@@ -42,7 +42,7 @@ void NetFix::Update()
 		PlayerPacket* packet = new PlayerPacket();
 		packet->receivedAt = 0;
 		packet->sentAt = 0;
-		packet->content = std::string(data).substr(BYTES_ID * 2, received - (BYTES_ID * 2) - 1);
+		packet->content = std::string(data).substr(BYTES_ID * 2, received - (BYTES_ID * 2));
 		packet->protocol = NetworkProtocol::UDP;
 
 		//Parse the id
@@ -83,4 +83,9 @@ PlayerPacket* NetFix::GetNextPacket()
 	PlayerPacket* output = _packetBuffer.front();
 	_packetBuffer.pop();
 	return output;
+}
+
+void NetFix::Send(sf::IpAddress addr, const char* data, unsigned int size)
+{
+	_socket.send(data, size, addr, DEFAULT_PORT + 1);
 }

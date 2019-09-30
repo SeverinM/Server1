@@ -14,6 +14,7 @@ using namespace std;
 #define BYTES_ID 3
 #define CREATE_ROOM "CRTROOM"
 #define LEFT_LOBBY "LBYLEFT"
+#define DEFAULT_PORT 54000
 
 class Player;
 

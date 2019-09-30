@@ -1,5 +1,6 @@
 #include "Player.h"
 #include <iostream>
+#include "NetFix.h"
 
 Player::Player(sf::TcpSocket* sock)
 {
@@ -46,11 +47,15 @@ void Player::ResetTimeout()
 	_timeout = DEFAULT_TIMEOUT;
 }
 
-void Player::SendUDP(const char* toSend, unsigned int size)
+void Player::Send(const char* toSend, unsigned int size, NetworkProtocol protocol)
 {
-	sf::UdpSocket* udp = new sf::UdpSocket();
-	udp->bind(54000);
-	udp->send(toSend, size, _connection->getRemoteAddress(), 54000);
+	if (protocol == NetworkProtocol::TCP)
+		_connection->send(toSend, size);
+	else
+	{
+		std::cout << _connection->getRemoteAddress() << std::endl;
+		NetFix::GetInstance()->Send(_connection->getRemoteAddress(), toSend, size);
+	}
 }
 
 void Player::ChangePlace(PlayerPlace* pp)

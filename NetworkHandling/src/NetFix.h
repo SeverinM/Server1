@@ -27,4 +27,5 @@ class NetFix
 		inline IpAddress GetPublicAdress() { return IpAddress::getPublicAddress(); }
 		inline void AddPacket(PlayerPacket* pkt) { _packetBuffer.push(pkt); }
 		PlayerPacket* GetNextPacket();
+		void Send(sf::IpAddress addr, const char* data, unsigned int size);
 };
