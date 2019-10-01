@@ -109,7 +109,7 @@ PlayerManager::PlayerManager()
 
 void PlayerManager::Kill(std::map<unsigned int, Player*>::iterator it)
 {
-	_alivesPlayer.erase(it);
 	it->second->ChangePlace(NULL);
 	delete(it->second);
+	_alivesPlayer.erase(it);
 }
