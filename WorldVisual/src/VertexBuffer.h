@@ -2,11 +2,10 @@
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
 
-template <class T>
 class VBO
 {
 	protected:
-		GLint _index = 0;
+		GLuint _index = 0;
 
 	public:
 		VBO()
@@ -17,15 +16,16 @@ class VBO
 		virtual void ConfigureData()
 		{
 			glBindBuffer(GL_ARRAY_BUFFER, _index);
-			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(T), (void*)0);
+			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+			glEnableVertexAttribArray(0);
 		}
 
-		virtual void SetData(T* vertices, unsigned int size)
+		virtual void SetData(float* vertices, unsigned int size)
 		{
 			if (_index <= 0)
 				return;
 
-			glBindBuffer(Gl_ARRAY_BUFFER, _index);
+			glBindBuffer(GL_ARRAY_BUFFER, _index);
 			glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 		}
 };

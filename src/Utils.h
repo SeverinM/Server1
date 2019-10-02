@@ -2,18 +2,29 @@
 #include <sys/stat.h>
 #include <fstream>
 #include <sstream>
+#include <iostream>
+#include <Windows.h>
+#include <cstdlib>
 
 using namespace std;
 
 struct Utils
 {
-	static bool FileExist(const char * fileName)
+	static void FullPathName(string name)
 	{
-		struct stat buffer;
-		return (stat(fileName, &buffer) == 0);
+		TCHAR buffer[4096] = TEXT("");
+		TCHAR** lppPart = { NULL };
+		DWORD retval = GetFullPathName((TCHAR*)name.c_str(), 4096, buffer, lppPart);
+		std::cout << buffer << std::endl;
 	}
 
-	stringstream * ReadFile(const char* fileName, unsigned int &size)
+	static bool FileExist(const char * fileName)
+	{
+		ifstream infile(fileName);
+		return infile.good();
+	}
+
+	static stringstream * ReadFile(const char* fileName)
 	{
 		if (!FileExist(fileName))
 			return NULL;
@@ -25,7 +36,7 @@ struct Utils
 		{
 			while (getline(file, line))
 			{
-				*ss << line;
+				*ss << line << "\n";
 			}
 			file.close();
 		}

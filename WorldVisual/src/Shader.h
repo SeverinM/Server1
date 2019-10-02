@@ -9,7 +9,8 @@
 class Shader
 {
 	protected:
-		unsigned int _id;
+		unsigned int _id = 0;
+		GLint CompileShader(std::string nameFolder, GLenum shaderType);
 
 	public:
 		Shader(std::string nameFolder);
