@@ -1,5 +1,7 @@
 #include "src/Instance.h"
 #include "src/Shader.h"
+#include "src//VertexArray.h"
+#include "src/VertexBuffer.h"
 
 void ProcessInput(GLFWwindow* window)
 {
@@ -26,11 +28,14 @@ int main()
 	{
 		return 1;
 	}
+	else
+	{
+		instance->InitDatas();
+	}
 
-	Shader sh("./src/shader");
+
 	while (!instance->Update(0.1) && !glfwWindowShouldClose(instance->GetWindow()))
 	{
-		ProcessInput(instance->GetWindow());
 		glfwSwapBuffers(instance->GetWindow());
 		glfwPollEvents();
 	}

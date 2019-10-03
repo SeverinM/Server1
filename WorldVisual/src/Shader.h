@@ -14,5 +14,7 @@ class Shader
 
 	public:
 		Shader(std::string nameFolder);
+		~Shader();
 		void Use();
+		inline int GetId() { return _id; }
 };

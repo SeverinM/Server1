@@ -26,6 +26,7 @@ Shader::Shader(std::string nameFolder)
 	{
 		glAttachShader(_id, idVS);
 		glAttachShader(_id, idFS);
+		std::cout << _id << std::endl;
 	}
 
 	if (geometryExist)
@@ -38,6 +39,8 @@ Shader::Shader(std::string nameFolder)
 	}
 
 	glLinkProgram(_id);
+	glDeleteShader(idVS);
+	glDeleteShader(idFS);
 }
 
 GLint Shader::CompileShader(std::string nameFolder, GLenum shaderType)
@@ -63,4 +66,15 @@ GLint Shader::CompileShader(std::string nameFolder, GLenum shaderType)
 		return 0;
 	}
 	return shader;
+}
+
+void Shader::Use()
+{
+	glUseProgram(_id);
+}
+
+Shader::~Shader()
+{
+	if (_id != 0)
+		glDeleteProgram(_id);
 }
