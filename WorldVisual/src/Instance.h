@@ -4,12 +4,13 @@
 #include "VertexArray.h"
 #include "Shader.h"
 #include "Camera.h"
+#include "ShapeDisplay.h"
 
 class Instance
 {
 	protected:
 		GLFWwindow* _window;
-		VAO * _vao;
+		ShapeDisplay* _cube;
 		Shader* _shader;
 		glm::mat4 _mat;
 		Camera* _cam;

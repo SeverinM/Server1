@@ -16,66 +16,23 @@ bool Instance::Init(unsigned int width, unsigned height)
 }
 
 void Instance::InitDatas()
-{
+{ 
 	_shader = new Shader("./src/shader");
 	_cam = new Camera(_height, _width);
 	_cam->SetPosition(vec3(2, 0, 2));
-	_shader->SetMatrix("v", _cam->GetMatrix());
-	_shader->SetMatrix("p", _mat);
-
-	float vertices[] = {
-		 0,0,0,
-		 1,0,0,
-		 0,1,0,
-		 0,0,1,
-		 0,1,1,
-		 1,1,0,
-		 1,0,1,
-		 1,1,1
-	};
-
-	unsigned int indices[] = {
-		//Under face
-		0,1,2,
-		2,1,5,
-		//Above face
-		3,6,4,
-		4,7,6,
-		//Front face
-		0,3,1,
-		3,6,1,
-		//Back face
-		2,5,4,
-		4,7,5,
-		//Left face
-		0,2,3,
-		2,4,3,
-		//Right face
-		1,5,6,
-		5,7,6
-	};
-
-	_vao = new VAO();
-	VBO* vbo = new VBO();
-	IndexedVBO* ebo = new IndexedVBO();
-
-	_vao->Use();
-	_vao->AddDatas(vbo,vertices,sizeof(vertices));
-	_vao->AddIndices(ebo, indices, sizeof(indices));
-	_vao->Unuse();
+	_cube = ShapeDisplay::CreateCube(_shader);
 }
 
 void Instance::Resize(GLFWwindow* window, int width, int height)
 {
-	glViewport(0, 0, 800, 600);
+	glViewport(0, 0, width, height);
 }
 
 int Instance::Update(float elapsed)
 {
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
-	_shader->Use();
-	_vao->Use();
+	_cube->Render(_cam, _mat);
 	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
 	return 0;
 }

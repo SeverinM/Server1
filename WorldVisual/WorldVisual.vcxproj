@@ -141,11 +141,13 @@
     <ClCompile Include="src\Camera.cpp" />
     <ClCompile Include="src\Instance.cpp" />
     <ClCompile Include="src\Shader.cpp" />
+    <ClCompile Include="src\ShapeDisplay.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Camera.h" />
     <ClInclude Include="src\Instance.h" />
     <ClInclude Include="src\Shader.h" />
+    <ClInclude Include="src\ShapeDisplay.h" />
     <ClInclude Include="src\VertexArray.h" />
     <ClInclude Include="src\VertexBuffer.h" />
   </ItemGroup>

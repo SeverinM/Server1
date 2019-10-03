@@ -19,7 +19,7 @@ int main()
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	Instance* instance = new Instance();
 
-	if (!instance->Init(500, 500))
+	if (!instance->Init(800, 600))
 	{
 		return 2;
 	}
