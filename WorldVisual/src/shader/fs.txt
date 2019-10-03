@@ -1,7 +1,12 @@
 #version 330 core
 out vec4 FragColor;
 
+in vec3 truePos;
+
+uniform mat4 v;
+uniform mat4 p;
+
 void main()
 {
-    FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);
+    FragColor = vec4(truePos, 1.0f);
 } 

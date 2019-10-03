@@ -3,6 +3,7 @@
 #include "GLFW/glfw3.h"
 #include "VertexArray.h"
 #include "Shader.h"
+#include "Camera.h"
 
 class Instance
 {
@@ -10,6 +11,10 @@ class Instance
 		GLFWwindow* _window;
 		VAO * _vao;
 		Shader* _shader;
+		glm::mat4 _mat;
+		Camera* _cam;
+		int _height;
+		int _width;
 
 	public :
 		bool Init(unsigned int width, unsigned int height);
