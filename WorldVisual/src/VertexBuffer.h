@@ -3,8 +3,11 @@
 #include "GLFW/glfw3.h"
 #include <iostream>
 
-class VBO
+namespace s1
 {
+
+	class VBO
+	{
 	protected:
 		GLuint _index = 0;
 		unsigned int _size = 0;
@@ -17,13 +20,19 @@ class VBO
 			glGenBuffers(1, &_index);
 		}
 
-		virtual void AddCanal(void * offset = (void*)0)
+		virtual ~VBO()
+		{
+			if (_index != 0)
+				glDeleteBuffers(1, &_index);
+		}
+
+		virtual void AddCanal(void* offset = (void*)0)
 		{
 			glVertexAttribPointer(_cursorCanal, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), offset);
 			glEnableVertexAttribArray(_cursorCanal);
 		}
 
-		virtual void SetData(const void * vertices, unsigned int size)
+		virtual void SetData(const void* vertices, unsigned int size)
 		{
 			if (_index <= 0)
 				return;
@@ -36,13 +45,14 @@ class VBO
 
 		inline GLuint GetIndex() { return _index; }
 		unsigned int GetSize() { return _size; }
-		const void * GetVertices() { return _vertices; }
-};
+		const void* GetVertices() { return _vertices; }
+	};
 
-class IndexedVBO : public VBO
-{
+	class IndexedVBO : public VBO
+	{
 	public:
 		IndexedVBO() : VBO() {};
+		virtual ~IndexedVBO() { VBO::~VBO(); }
 		virtual void SetData(const void* indices, unsigned int size)
 		{
 			if (_index <= 0)
@@ -53,4 +63,5 @@ class IndexedVBO : public VBO
 			_vertices = indices;
 			_size = sizeof(indices);
 		}
-};
+	};
+}

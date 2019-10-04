@@ -3,6 +3,8 @@
 #include "src//VertexArray.h"
 #include "src/VertexBuffer.h"
 
+using namespace s1;
+
 void ProcessInput(GLFWwindow* window)
 {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)

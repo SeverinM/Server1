@@ -3,17 +3,33 @@
 #include "GLFW/glfw3.h"
 #include "VertexBuffer.h"
 
-class VAO
+namespace s1
 {
+	class VAO
+	{
 	protected:
 		unsigned int _id;
 		VBO* _vbo;
-		IndexedVBO * _ebo;
+		IndexedVBO* _ebo;
 
 	public:
 		VAO()
 		{
 			glGenVertexArrays(1, &_id);
+		}
+
+		~VAO()
+		{
+			glDeleteVertexArrays(1, &_id);
+			if (_vbo != NULL)
+			{
+				delete _vbo;
+			}
+
+			if (_ebo != NULL)
+			{
+				delete _ebo;
+			}
 		}
 
 		void Use()
@@ -27,7 +43,7 @@ class VAO
 			glBindVertexArray(0);
 		}
 
-		void AddDatas(VBO * vbo,void * vertices,unsigned int size)
+		void AddDatas(VBO* vbo, void* vertices, unsigned int size)
 		{
 			Use();
 			vbo->SetData(vertices, size);
@@ -41,4 +57,5 @@ class VAO
 			ebo->SetData(indices, size);
 			_ebo = ebo;
 		}
-};
+	};
+}

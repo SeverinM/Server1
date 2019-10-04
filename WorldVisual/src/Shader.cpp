@@ -2,6 +2,8 @@
 #include <stdexcept>
 #include "Utils.h"
 
+using namespace s1;
+
 Shader::Shader(std::string nameFolder)
 {
 	std::string vsName = nameFolder + VERTEX_SHADER;

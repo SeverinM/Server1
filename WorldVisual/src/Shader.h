@@ -8,8 +8,11 @@
 #define FRAGMENT_SHADER "/fs.txt"
 #define GEOMETRY_SHADER "/gs.txt"
 
-class Shader
+namespace s1
 {
+
+	class Shader
+	{
 	protected:
 		unsigned int _id = 0;
 		GLint CompileShader(std::string nameFolder, GLenum shaderType);
@@ -19,14 +22,14 @@ class Shader
 		~Shader();
 		void Use();
 		inline int GetId() { return _id; }
-		inline void SetFloat(const char * name, float value)
+		inline void SetFloat(const char* name, float value)
 		{
 			int location = glGetUniformLocation(_id, name);
 			Use();
-			glUniform1f(location,value);
+			glUniform1f(location, value);
 		}
 
-		inline void SetMatrix(const char * name , glm::mat4 mat)
+		inline void SetMatrix(const char* name, glm::mat4 mat)
 		{
 			Use();
 			int location = glGetUniformLocation(_id, name);
@@ -37,6 +40,8 @@ class Shader
 			for (int i = 0; i < 16; ++i)
 				dArray[i] = pSource[i];
 
-			glUniformMatrix4fv(location, 1,GL_FALSE,glm::value_ptr(mat));
+			glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(mat));
 		}
-};
+	};
+
+}

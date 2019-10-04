@@ -1,11 +1,18 @@
 #include "ShapeDisplay.h"
 
+using namespace s1;
+
 ShapeDisplay::ShapeDisplay(VAO* vao, Shader* sh, unsigned int sizeElement, bool useIndex)
 {
 	_vao = vao;
 	_shader = sh;
 	_size = sizeElement;
 	_useIndex = useIndex;
+}
+
+ShapeDisplay::~ShapeDisplay()
+{
+	delete _vao;
 }
 
 void ShapeDisplay::Render(Camera * cam, mat4 projection)
@@ -21,15 +28,26 @@ void ShapeDisplay::Render(Camera * cam, mat4 projection)
 		glDrawArrays(GL_TRIANGLES, 0, 3);
 }
 
-void ShapeDisplay::Translate(vec3 newPosition)
+void ShapeDisplay::SetPosition(vec3 newPosition, bool relative)
 {
-	_position += newPosition;
+	if (relative)
+		_position += newPosition;
+	else
+		_position = newPosition;
 }
 
 mat4 ShapeDisplay::GetMatrix()
 {
-	mat4 modelMatrix;
-	translate(modelMatrix, _position);
-	scale(modelMatrix, _scale);
+	mat4 modelMatrix = glm::identity<mat4>();
+	modelMatrix = scale(modelMatrix, _scale);
+	modelMatrix = translate(modelMatrix, _position);
 	return modelMatrix;
+}
+
+void ShapeDisplay::SetScale(vec3 newScale, bool relative)
+{
+	if (relative)
+		_scale += newScale;
+	else
+		_scale = newScale;
 }

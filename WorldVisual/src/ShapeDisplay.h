@@ -3,8 +3,11 @@
 #include "Camera.h"
 #include "VertexArray.h"
 
-class ShapeDisplay
+namespace s1
 {
+
+	class ShapeDisplay
+	{
 	protected:
 		Shader* _shader;
 		vec3 _position = vec3(0, 0, 0);
@@ -15,12 +18,14 @@ class ShapeDisplay
 		unsigned int _size = 0;
 
 	public:
-		ShapeDisplay(VAO* vao, Shader * sh, unsigned int sizeElement, bool useIndex);
+		ShapeDisplay(VAO* vao, Shader* sh, unsigned int sizeElement, bool useIndex);
+		~ShapeDisplay();
 		void Render(Camera* cam, mat4 projection);
-		void Translate(vec3 newPosition);
+		void SetPosition(vec3 newPosition, bool relative = false);
+		void SetScale(vec3 newScale, bool relative = false);
 		mat4 GetMatrix();
 
-		static ShapeDisplay * CreateCube(Shader * sh)
+		static ShapeDisplay* CreateCube(Shader* sh)
 		{
 			float vertices[] = {
 				 0,0,0,
@@ -54,7 +59,7 @@ class ShapeDisplay
 				5,7,6
 			};
 
-			VAO * vao = new VAO();
+			VAO* vao = new VAO();
 			VBO* vbo = new VBO();
 			IndexedVBO* ebo = new IndexedVBO();
 
@@ -64,4 +69,5 @@ class ShapeDisplay
 			vao->Unuse();
 			return new ShapeDisplay(vao, sh, 36, true);
 		}
-};
+	};
+}
