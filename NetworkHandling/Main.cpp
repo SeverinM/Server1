@@ -6,8 +6,14 @@
 #include <chrono>
 #include "src/Utils.h"
 
+//OpenGL
+#include "Instance.h"
+
+using namespace s1;
+
 int main()
 {
+	Instance* instance = new Instance(800, 600);
 	NetFix* nf = NetFix::GetInstance();
 
 	PlayerManager* pM = PlayerManager::GetInstance();

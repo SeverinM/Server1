@@ -4,16 +4,21 @@
 using namespace s1;
 
 std::unordered_map<GLFWwindow*, Instance*> Instance::allInstances = std::unordered_map<GLFWwindow*, Instance*>();
+bool Instance::_contextInitialized = false;
 
-bool Instance::Init(unsigned int width, unsigned height)
+Instance::Instance(unsigned int width , unsigned height)
 {
+	if (!_contextInitialized)
+	{
+		glfwInit();
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+	}
+
 	_width = width;
 	_height = height;
 	_window = glfwCreateWindow(width, height, "Window", NULL, NULL);
-	if (_window == NULL)
-	{
-		return false;
-	}
 	glfwMakeContextCurrent(_window);
 
 	//Bind callbacks
@@ -21,13 +26,17 @@ bool Instance::Init(unsigned int width, unsigned height)
 	glfwSetKeyCallback(_window, Keyboard);
 	glfwSetMouseButtonCallback(_window, MouseButton);
 	glfwSetCursorPosCallback(_window, MouseCursor);
-
 	_mat = glm::perspective(glm::radians(45.0f), (float)width / (float)height, 0.1f, 100.0f);
 	allInstances[_window] = this;
-	return true;
+
+	if (!_contextInitialized)
+	{
+		_contextInitialized = !_contextInitialized;
+		gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+	}
 }
 
-void Instance::InitDatas()
+void Instance::Init()
 { 
 	glEnable(GL_DEPTH_TEST);
 	_shader = new Shader("./src/shader");

@@ -27,10 +27,11 @@ namespace s1
 		glm::vec2 _deltaPosition;
 		std::vector<ShapeDisplay*> _allShapes;
 		std::vector<ShapeDisplay*>::iterator _it;
+		static bool _contextInitialized;
 
 	public:
-		bool Init(unsigned int width, unsigned int height);
-		void InitDatas();
+		Instance(unsigned int width , unsigned int height);
+		void Init();
 		void AddCube(vec3 position, vec3 size);
 		int Update(float elapsed);
 		inline GLFWwindow* GetWindow() { return _window; }
