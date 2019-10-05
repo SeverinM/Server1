@@ -25,7 +25,7 @@ class PlayerManager
 		void AddPlayer(sf::TcpSocket* sock);
 		void RemovePlayer(unsigned int id);
 		PlayerPacket* GetNextPacket();
-		void Update(float elapsed);
+		void Update(double elapsed);
 		bool IsConnected(sf::IpAddress from);
 		Player* FindPlayer(unsigned int id);
 		void Kill(std::map<unsigned int, Player*>::iterator it);

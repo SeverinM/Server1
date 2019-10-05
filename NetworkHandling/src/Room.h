@@ -18,4 +18,5 @@ class Room : public PlayerPlace
 		bool RequestEnter(Player * player) override;
 		void PlayerLeft( Player * player) override;
 		void PlayerEnter( Player* player) override;
+		void Tick();
 };

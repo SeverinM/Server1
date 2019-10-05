@@ -7,7 +7,7 @@ using namespace sf;
 int PlayerManager::_ID = 0;
 PlayerManager* PlayerManager::_instance = nullptr;
 
-void PlayerManager::Update(float elapsed)
+void PlayerManager::Update(double elapsed)
 {
 	if (_alivesPlayer.size() == 0)
 	{
@@ -22,7 +22,7 @@ void PlayerManager::Update(float elapsed)
 		//Timeout verification
 		if (plyr->TimeoutUpdate(elapsed))
 		{
-			std::cout << plyr->getSocket()->getRemoteAddress() << " disconnected " << std::endl;
+			std::cout << plyr->getSocket()->getRemoteAddress() << " disconnected (timeout) " << std::endl;
 			Kill(it);
 			continue;
 		}

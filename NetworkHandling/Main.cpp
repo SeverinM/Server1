@@ -5,6 +5,7 @@
 #include <thread>
 #include <chrono>
 #include "src/Utils.h"
+#include "src/PacketBuffer.h"
 
 #include "Instance.h"
 
@@ -13,24 +14,41 @@ using namespace s1;
 int main()
 {
 	glfwInit();
-	Instance* instance = new Instance(800,600);
-	instance->Init("../WorldVisual/src/shader");
+	double value = SERVER_FREQUENCY;
 
-	NetFix* nf = NetFix::GetInstance();
+	//How long before the next tick
+	double tickDelta = (1.0 / value);
+	double accumulatedTime = 0;
+
+	PacketBuffer* buffer = new PacketBuffer(10);
+	NetFix* nf = new NetFix(buffer);
 
 	PlayerManager* pM = PlayerManager::GetInstance();
-	NetInput* nI = new NetInput(pM);
+	NetInput* nI = new NetInput(pM, buffer);
 
 	nf->Init(DEFAULT_PORT, pM);
 
-	while (!instance->Update(0.1) && !glfwWindowShouldClose(instance->GetWindow()))
+	long delta = 0;
+	double seconds = 0;
+	chrono::time_point<chrono::steady_clock> t1 = chrono::steady_clock::now();
+	chrono::time_point<chrono::steady_clock> t2;
+
+	while (true)
 	{
-		int val = (1.0 / SERVER_FREQUENCY) * 1000.0;
-		//std::this_thread::sleep_for(std::chrono::milliseconds(val));
+		t1 = chrono::steady_clock::now();
+		seconds = delta / (double)1000000.0;
+		accumulatedTime += seconds;
+		while (accumulatedTime >= tickDelta)
+		{
+			accumulatedTime -= tickDelta;
+			nI->GetLobby()->Tick();
+		}
 		nf->Update();
-		pM->Update(val / (float)1000.0);
-		nI->Treat(nf->GetNextPacket());
-		nI->Treat(pM->GetNextPacket());
+		pM->Update(seconds);
+		nI->Update(seconds);
+
+		t2 = chrono::steady_clock::now();
+		delta = chrono::duration_cast<chrono::microseconds>(t2 - t1).count();
 	}
 
 	return 0;

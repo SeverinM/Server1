@@ -8,11 +8,6 @@ NetFix* NetFix::_instance = nullptr;
 
 NetFix* NetFix::GetInstance()
 {
-	if (_instance == nullptr)
-	{
-		_instance = new NetFix();
-	}
-
 	return _instance;
 }
 
@@ -28,6 +23,7 @@ void NetFix::Init(int port, PlayerManager * man)
 		_manager = man;
 		std::cout << "Init at " << port << std::endl;
 	}
+	_instance = this;
 }
 
 void NetFix::Update()
@@ -56,7 +52,7 @@ void NetFix::Update()
 		{
 			packet->player = player;
 			player->ResetTimeout();
-			_packetBuffer.push(packet);
+			_buffer->Insert(packet);
 		}
 		else
 		{
@@ -73,16 +69,6 @@ void NetFix::Update()
 		client->setBlocking(false);
 		_manager->AddPlayer(client);
 	}
-}
-
-PlayerPacket* NetFix::GetNextPacket()
-{
-	if (_packetBuffer.size() == 0)
-		return nullptr;
-
-	PlayerPacket* output = _packetBuffer.front();
-	_packetBuffer.pop();
-	return output;
 }
 
 void NetFix::Send(sf::IpAddress addr, const char* data, unsigned int size)

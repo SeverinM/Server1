@@ -7,7 +7,14 @@ Room::Room(unsigned int nbPlayers)
 {
 	_maxPlayer = nbPlayers;
 	_id = ++_ID;
-	_roomState = new DefaultRoomState();
+	_roomState = new VisualRoomState();
+	_roomState->Init();
+}
+
+void Room::Tick()
+{
+	if (_roomState->GetIsInit())
+		_roomState->Tick();
 }
 
 void Room::PlayerLeft(Player * player)

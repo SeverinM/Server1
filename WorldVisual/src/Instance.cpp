@@ -8,6 +8,7 @@ bool Instance::_contextInitialized = false;
 
 Instance::Instance(unsigned int width , unsigned height)
 {
+	//Context
 	if (!_contextInitialized)
 	{
 		glfwInit();
@@ -26,6 +27,7 @@ Instance::Instance(unsigned int width , unsigned height)
 	glfwSetKeyCallback(_window, Keyboard);
 	glfwSetMouseButtonCallback(_window, MouseButton);
 	glfwSetCursorPosCallback(_window, MouseCursor);
+
 	_mat = glm::perspective(glm::radians(45.0f), (float)width / (float)height, 0.1f, 100.0f);
 	allInstances[_window] = this;
 
@@ -36,14 +38,18 @@ Instance::Instance(unsigned int width , unsigned height)
 	}
 }
 
+Instance::~Instance()
+{
+	glfwDestroyWindow(_window);
+	glfwTerminate();
+}
+
 void Instance::Init(std::string path)
 { 
 	glEnable(GL_DEPTH_TEST);
 	_shader = new Shader(path);
 	_cam = new Camera(_height, _width);
 	_cam->SetPosition(vec3(5, -1, 1));
-	AddCube(vec3(0, 0, 0), vec3(1, 1, 1));
-	AddCube(vec3(0, 0, -2), vec3(4, 4, 0.1));
 }
 
 int Instance::Update(float elapsed)
@@ -158,10 +164,11 @@ void Instance::MouseCursor(GLFWwindow* window, double xpos, double ypos)
 	inst->SetDeltaMouse(xpos, ypos);
 }
 
-void Instance::AddCube(vec3 position, vec3 size)
+ShapeDisplay * Instance::AddCube(vec3 position, vec3 size)
 {
 	ShapeDisplay* display = ShapeDisplay::CreateCube(_shader);
 	display->SetPosition(position);
 	display->SetScale(size);
 	_allShapes.push_back(display);
+	return display;
 }

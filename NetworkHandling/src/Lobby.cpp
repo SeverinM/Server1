@@ -29,3 +29,13 @@ bool Lobby::RequestEnter(Player * player)
 {
 	return player->GetPlayerState() == PlayerState::InServer;
 }
+
+void Lobby::Tick()
+{
+	list<Room*>::iterator it = _rooms.begin();
+	while (it != _rooms.end())
+	{
+		(*it)->Tick();
+		it++;
+	}
+}

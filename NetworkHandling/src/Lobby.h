@@ -12,6 +12,7 @@ public:
 	void PlayerEnter(Player* player) override;
 	bool RequestEnter(Player * player) override;
 	Room * CreateRoom(unsigned int nbPlayer);
+	void Tick();
 
 protected:
 	std::list<Player*> _allPlayers;
