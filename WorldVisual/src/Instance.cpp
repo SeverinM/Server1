@@ -36,10 +36,10 @@ Instance::Instance(unsigned int width , unsigned height)
 	}
 }
 
-void Instance::Init()
+void Instance::Init(std::string path)
 { 
 	glEnable(GL_DEPTH_TEST);
-	_shader = new Shader("./src/shader");
+	_shader = new Shader(path);
 	_cam = new Camera(_height, _width);
 	_cam->SetPosition(vec3(5, -1, 1));
 	AddCube(vec3(0, 0, 0), vec3(1, 1, 1));
@@ -48,6 +48,7 @@ void Instance::Init()
 
 int Instance::Update(float elapsed)
 {
+	//Mouse handling
 	if (_rotationMode)
 	{
 		_cam->Rotate(glm::vec3(0, 0, 1), _deltaPosition.x * elapsed * 0.1);
@@ -62,6 +63,10 @@ int Instance::Update(float elapsed)
 		(*_it)->Render(_cam, _mat);
 	}
 	_deltaPosition = vec2();
+
+	glfwSwapBuffers(_window);
+	glfwPollEvents();
+
 	return 0;
 }
 

@@ -6,14 +6,16 @@
 #include <chrono>
 #include "src/Utils.h"
 
-//OpenGL
 #include "Instance.h"
 
 using namespace s1;
 
 int main()
 {
-	Instance* instance = new Instance(800, 600);
+	glfwInit();
+	Instance* instance = new Instance(800,600);
+	instance->Init("../WorldVisual/src/shader");
+
 	NetFix* nf = NetFix::GetInstance();
 
 	PlayerManager* pM = PlayerManager::GetInstance();
@@ -21,10 +23,10 @@ int main()
 
 	nf->Init(DEFAULT_PORT, pM);
 
-	while (true)
+	while (!instance->Update(0.1) && !glfwWindowShouldClose(instance->GetWindow()))
 	{
 		int val = (1.0 / SERVER_FREQUENCY) * 1000.0;
-		std::this_thread::sleep_for(std::chrono::milliseconds(val));
+		//std::this_thread::sleep_for(std::chrono::milliseconds(val));
 		nf->Update();
 		pM->Update(val / (float)1000.0);
 		nI->Treat(nf->GetNextPacket());

@@ -10,12 +10,9 @@ int main()
 	Instance* instance = new Instance(800,600);
 	instance->Init();
 
-	while (!instance->Update(0.1) && !glfwWindowShouldClose(instance->GetWindow()))
+	while (!instance->Update(0.1))
 	{
-		glfwSwapBuffers(instance->GetWindow());
-		glfwPollEvents();
 	}
 
-	glfwTerminate();
 	return 0;
 }
