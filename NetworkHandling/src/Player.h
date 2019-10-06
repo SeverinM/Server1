@@ -5,6 +5,7 @@
 #include "PlayerPlace.h"
 #include <algorithm>
 #include "Utils.h"
+#include "Command.h"
 
 //forward declaration
 struct PlayerPacket;
@@ -21,6 +22,21 @@ enum PlayerState
 };
 
 
+enum CommandType
+{
+	MOVE,
+	JUMP,
+	SHOOT
+};
+
+struct Command
+{
+	float params[4];
+	CommandType cmdType;
+	Player* player;
+};
+
+
 class Player
 {
 	private:
@@ -34,6 +50,8 @@ class Player
 		inline const sf::TcpSocket * const getSocket() { return _connection; }
 		inline PlayerState GetPlayerState() {return _state; }
 		inline void SetPlayerState(PlayerState newState) { _state = newState; }
+		void AddCommand(Command command);
+
 		bool TimeoutUpdate(float elapsed);
 		PlayerPacket* GetNextReceivedPacket();
 		void ResetTimeout();

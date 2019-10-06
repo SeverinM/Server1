@@ -8,6 +8,7 @@ class NetInput
 {
 	public:
 		void Update(double elapsed);
+		Command GenerateCommand(PlayerPacket * packet);
 		NetInput(PlayerManager* pM, PacketBuffer * buffer);
 		inline Lobby* GetLobby() { return &_lobby; }
 

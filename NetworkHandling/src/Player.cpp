@@ -34,8 +34,6 @@ PlayerPacket* Player::GetNextReceivedPacket()
 		PlayerPacket* pp = new PlayerPacket();
 		pp->content = std::string(data).substr(0, sizeReceived);
 		pp->protocol = NetworkProtocol::TCP;
-		pp->receivedAt = 0;
-		pp->sentAt = 0;
 		return pp;
 	}
 
@@ -75,4 +73,12 @@ void Player::ChangePlace(PlayerPlace* pp)
 	}
 
 	_place = pp;
+}
+
+void Player::AddCommand(Command command)
+{
+	if (_place != NULL)
+	{
+		_place->TransmitCommand(command);
+	}
 }

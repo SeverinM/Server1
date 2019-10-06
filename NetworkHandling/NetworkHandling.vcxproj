@@ -150,7 +150,7 @@
     <ClCompile Include="src\SynchronisationClock.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\GameState.h" />
+    <ClInclude Include="src\Command.h" />
     <ClInclude Include="src\Lobby.h" />
     <ClInclude Include="src\NetFix.h" />
     <ClInclude Include="src\NetInput.h" />
@@ -158,7 +158,6 @@
     <ClInclude Include="src\Player.h" />
     <ClInclude Include="src\PlayerManager.h" />
     <ClInclude Include="src\PlayerPlace.h" />
-    <ClInclude Include="src\PlayerState.h" />
     <ClInclude Include="src\Room.h" />
     <ClInclude Include="src\RoomState.h" />
     <ClInclude Include="src\SynchronisationClock.h" />

@@ -1,7 +1,7 @@
 #pragma once
 #include "SFML/Network.hpp"
 #include <string>
-#include "Player.h"
+#include <sstream>
 
 using namespace std;
 
@@ -24,12 +24,27 @@ enum NetworkProtocol
 	TCP
 };
 
+struct Consts
+{
+	static double deltaTick;
+
+	static std::vector<std::string> Split(std::string strToSplit, char delimeter)
+	{
+		std::stringstream ss(strToSplit);
+		std::string item;
+		std::vector<std::string> splittedStrings;
+		while (std::getline(ss, item, delimeter))
+		{
+			splittedStrings.push_back(item);
+		}
+		return splittedStrings;
+	}
+};
+
 struct PlayerPacket
 {
 	Player* player;
 	string content;
-	long sentAt;
-	long receivedAt;
 	NetworkProtocol protocol;
 	short port = 0;
 };

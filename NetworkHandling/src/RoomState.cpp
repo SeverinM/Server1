@@ -1,6 +1,8 @@
 #include "RoomState.h"
 #include <iostream>
 #include <cstdlib>
+#include <chrono>
+#include <sstream>
 
 void RoomState::ChangeState(RoomState* newState)
 {
@@ -38,11 +40,8 @@ bool DefaultRoomState::UnInit()
 
 bool DefaultRoomState::Init()
 {
+	_epochMilliStart = chrono::duration_cast<chrono::milliseconds>(chrono::system_clock::now().time_since_epoch()).count();
 	return true;
-}
-
-void DefaultRoomState::Tick(float elapsed)
-{
 }
 
 Player * DefaultRoomState::Pop()
@@ -61,9 +60,11 @@ Player * DefaultRoomState::Pop()
 
 void VisualRoomState::PlayerEntered(Player* entered)
 {
-	std::cout << "Entering visual state" << std::endl;
 	s1::ShapeDisplay * display = _visualPart->AddCube(vec3(GetSize(), 0, 0), vec3(1, 1, 1));
 	_allShapes[entered] = display;
+	std::ostringstream oss;
+	oss << _epochMilliStart;
+	entered->Send(oss.str().c_str(), oss.str().size(), NetworkProtocol::UDP);
 }
 
 void VisualRoomState::PlayerLeft(Player* left)
@@ -75,6 +76,7 @@ void VisualRoomState::PlayerLeft(Player* left)
 
 bool VisualRoomState::Init()
 {
+	_epochMilliStart = chrono::duration_cast<chrono::milliseconds>(chrono::system_clock::now().time_since_epoch()).count();
 	_visualPart = new s1::Instance(800, 600);
 	_visualPart->Init("../WorldVisual/src/shader");
 	_isInit = true;
@@ -100,7 +102,13 @@ Player* VisualRoomState::Pop()
 	return output;
 }
 
-void VisualRoomState::Tick(float elapsed)
+void VisualRoomState::Tick()
 {
-	_visualPart->Update(elapsed);
+	_visualPart->Update(Consts::deltaTick);
+}
+
+void VisualRoomState::InterpretCommand(Command command)
+{
+	std::map<Player*, s1::ShapeDisplay*>::iterator it = _allShapes.find(command.player);
+	it->second->SetPosition(vec3(command.params[0], command.params[1], command.params[2]), true);
 }

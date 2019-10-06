@@ -18,5 +18,12 @@ class Room : public PlayerPlace
 		bool RequestEnter(Player * player) override;
 		void PlayerLeft( Player * player) override;
 		void PlayerEnter( Player* player) override;
+		void TransmitCommand(Command cmd) override 
+		{
+			if (_roomState != NULL)
+			{
+				_roomState->InterpretCommand(cmd);
+			}
+		};
 		void Tick();
 };

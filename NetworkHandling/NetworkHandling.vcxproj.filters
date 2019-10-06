@@ -53,9 +53,6 @@
     <ClInclude Include="src\PlayerManager.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="src\PlayerState.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
     <ClInclude Include="src\Utils.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
@@ -74,9 +71,6 @@
     <ClInclude Include="src\Room.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameState.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
     <ClInclude Include="src\PlayerPlace.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
@@ -84,6 +78,9 @@
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="src\PacketBuffer.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Command.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
   </ItemGroup>

@@ -36,8 +36,6 @@ void NetFix::Update()
 	if (_socket.receive(data, PACKET_SIZE, received,sender,port) == Socket::Done)
 	{
 		PlayerPacket* packet = new PlayerPacket();
-		packet->receivedAt = 0;
-		packet->sentAt = 0;
 		packet->content = std::string(data).substr(BYTES_ID * 2, received - (BYTES_ID * 2));
 		packet->protocol = NetworkProtocol::UDP;
 

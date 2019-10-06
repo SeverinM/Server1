@@ -11,13 +11,15 @@
 
 using namespace s1;
 
+double Consts::deltaTick = 0;
+
 int main()
 {
 	glfwInit();
 	double value = SERVER_FREQUENCY;
 
 	//How long before the next tick
-	double tickDelta = (1.0 / value);
+	Consts::deltaTick = (1.0 / value);
 	double accumulatedTime = 0;
 
 	PacketBuffer* buffer = new PacketBuffer(10);
@@ -38,9 +40,9 @@ int main()
 		t1 = chrono::steady_clock::now();
 		seconds = delta / (double)1000000.0;
 		accumulatedTime += seconds;
-		while (accumulatedTime >= tickDelta)
+		while (accumulatedTime >= Consts::deltaTick)
 		{
-			accumulatedTime -= tickDelta;
+			accumulatedTime -= Consts::deltaTick;
 			nI->GetLobby()->Tick();
 		}
 		nf->Update();

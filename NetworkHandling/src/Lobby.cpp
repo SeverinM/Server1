@@ -15,7 +15,7 @@ void Lobby::PlayerEnter(Player* player)
 	std::cout << "Entering lobby" << std::endl;
 	player->SetPlayerState(PlayerState::InLobby);
 	_allPlayers.push_back(player);
-	player->Send("Entered", 100, NetworkProtocol::UDP);
+	player->Send("Entered lobby", 100, NetworkProtocol::UDP);
 }
 
 Room* Lobby::CreateRoom(unsigned int nbPlayer)

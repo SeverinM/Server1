@@ -14,7 +14,9 @@ Room::Room(unsigned int nbPlayers)
 void Room::Tick()
 {
 	if (_roomState->GetIsInit())
+	{
 		_roomState->Tick();
+	}
 }
 
 void Room::PlayerLeft(Player * player)
@@ -26,7 +28,7 @@ void Room::PlayerEnter(Player* player)
 {
 	player->SetPlayerState(PlayerState::InRoom);
 	_roomState->PlayerEntered(player);
-	string ent = "Entered";
+	string ent = "Entered room";
 	player->Send(ent.c_str(), ent.size(), NetworkProtocol::UDP);
 }
 
