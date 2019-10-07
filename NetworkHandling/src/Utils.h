@@ -27,6 +27,7 @@ enum NetworkProtocol
 struct Consts
 {
 	static double deltaTick;
+	static long long lastTick;
 
 	static std::vector<std::string> Split(std::string strToSplit, char delimeter)
 	{

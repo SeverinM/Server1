@@ -51,7 +51,6 @@ void Player::Send(const char* toSend, unsigned int size, NetworkProtocol protoco
 		_connection->send(toSend, size);
 	else
 	{
-		std::cout << _connection->getRemoteAddress() << std::endl;
 		NetFix::GetInstance()->Send(_connection->getRemoteAddress(), toSend, size);
 	}
 }

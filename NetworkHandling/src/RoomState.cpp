@@ -63,7 +63,7 @@ void VisualRoomState::PlayerEntered(Player* entered)
 	s1::ShapeDisplay * display = _visualPart->AddCube(vec3(GetSize(), 0, 0), vec3(1, 1, 1));
 	_allShapes[entered] = display;
 	std::ostringstream oss;
-	oss << _epochMilliStart;
+	oss << "STRT" << _epochMilliStart;
 	entered->Send(oss.str().c_str(), oss.str().size(), NetworkProtocol::UDP);
 }
 
@@ -76,7 +76,7 @@ void VisualRoomState::PlayerLeft(Player* left)
 
 bool VisualRoomState::Init()
 {
-	_epochMilliStart = chrono::duration_cast<chrono::milliseconds>(chrono::system_clock::now().time_since_epoch()).count();
+	_epochMilliStart = Consts::lastTick;
 	_visualPart = new s1::Instance(800, 600);
 	_visualPart->Init("../WorldVisual/src/shader");
 	_isInit = true;

@@ -12,6 +12,7 @@
 using namespace s1;
 
 double Consts::deltaTick = 0;
+long long Consts::lastTick = 0;
 
 int main()
 {
@@ -42,6 +43,7 @@ int main()
 		accumulatedTime += seconds;
 		while (accumulatedTime >= Consts::deltaTick)
 		{
+			Consts::lastTick = chrono::duration_cast<chrono::milliseconds>(chrono::system_clock::now().time_since_epoch()).count();
 			accumulatedTime -= Consts::deltaTick;
 			nI->GetLobby()->Tick();
 		}
