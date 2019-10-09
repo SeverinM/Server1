@@ -81,3 +81,15 @@ void Player::AddCommand(Command command)
 		_place->TransmitCommand(command);
 	}
 }
+
+std::string Player::GetHexaId()
+{
+	std::stringstream ss;
+	ss << std::hex << _id;
+	string idStr = ss.str();
+	while (idStr.size() < BYTES_ID * 2)
+	{
+		idStr.insert(0, "0");
+	}
+	return ss.str();
+}

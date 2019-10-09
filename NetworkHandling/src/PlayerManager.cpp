@@ -61,6 +61,7 @@ void PlayerManager::AddPlayer(sf::TcpSocket* sock)
 	int tempId;
 	tempId = ++PlayerManager::_ID;
 	_alivesPlayer[tempId] = player;
+	player->SetId(tempId);
 	std::stringstream ss;
 	ss << std::hex << tempId;
 	string idStr = ss.str();

@@ -64,6 +64,13 @@ void VisualRoomState::PlayerEntered(Player* entered)
 	_allShapes[entered] = display;
 	std::ostringstream oss;
 	oss << "STRT" << _epochMilliStart;
+	oss << "#";
+	oss << display->GetPosition().x;
+	oss << "#";
+	oss << display->GetPosition().y;
+	oss << "#";
+	oss << display->GetPosition().z;
+	oss << "#!";
 	entered->Send(oss.str().c_str(), oss.str().size(), NetworkProtocol::UDP);
 }
 
@@ -104,7 +111,28 @@ Player* VisualRoomState::Pop()
 
 void VisualRoomState::Tick()
 {
+	_tick++;
 	_visualPart->Update(Consts::deltaTick);
+	std::map<Player*, s1::ShapeDisplay*>::iterator it;
+	if (_allShapes.size() == 0)
+		return;
+
+	std::stringstream ss;
+	ss << _tick;
+	ss << "|";
+	for (it = _allShapes.begin(); it != _allShapes.end(); it++)
+	{
+		ss << it->first->GetId();
+		ss << "#";
+		ss << it->second->GetPosition().x;
+		ss << "#";
+		ss << it->second->GetPosition().y;
+		ss << "#";
+		ss << it->second->GetPosition().z;
+		ss << "#|";
+	}
+	std::cout << ss.str() << std::endl;
+	_allShapes.begin()->first->Send(ss.str().c_str(), ss.str().size(), NetworkProtocol::UDP);
 }
 
 void VisualRoomState::InterpretCommand(Command command)

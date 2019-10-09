@@ -6,7 +6,6 @@ void NetInput::Update(double elapsed)
 	PlayerPacket* packet = _buffer->Pop();
 	if (packet != nullptr)
 	{
-		std::cout << packet->content << std::endl;
 		if (packet->content == CONNECT_KEY && _lobby.RequestEnter(packet->player))
 		{
 			packet->player->ChangePlace(&_lobby);
@@ -57,7 +56,6 @@ Command NetInput::GenerateCommand(PlayerPacket* pp)
 			continue;
 		}
 		cmd.params[count] = std::stod(value);
-		std::cout << cmd.params[count] << std::endl;
 		count++;
 	}
 	return cmd;
