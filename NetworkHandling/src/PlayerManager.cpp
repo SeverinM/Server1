@@ -69,7 +69,7 @@ void PlayerManager::AddPlayer(sf::TcpSocket* sock)
 	{
 		idStr.insert(0, "0");
 	}
-	sock->send(idStr.c_str(), 100);
+	sock->send(idStr.c_str(), BYTES_ID * 2);
 }
 
 void PlayerManager::RemovePlayer(unsigned int id)

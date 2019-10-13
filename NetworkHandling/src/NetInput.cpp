@@ -4,7 +4,7 @@
 void NetInput::Update(double elapsed)
 {
 	PlayerPacket* packet = _buffer->Pop();
-	if (packet != nullptr)
+	while (packet != nullptr)
 	{
 		if (packet->content == CONNECT_KEY && _lobby.RequestEnter(packet->player))
 		{
@@ -23,6 +23,9 @@ void NetInput::Update(double elapsed)
 			Command cmd = GenerateCommand(packet);
 			packet->player->AddCommand(cmd);
 		}
+
+		delete packet;
+		packet = NULL;
 	}
 }
 

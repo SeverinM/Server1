@@ -55,6 +55,7 @@ void NetFix::Update()
 		else
 		{
 			std::cout << "Rejected" << std::endl;
+			packet = NULL;
 			delete packet;
 		}
 	}
@@ -66,6 +67,11 @@ void NetFix::Update()
 		std::cout << "Accept : " << client->getRemoteAddress() << std::endl;
 		client->setBlocking(false);
 		_manager->AddPlayer(client);
+	}
+	else
+	{
+		delete client;
+		client = NULL;
 	}
 }
 

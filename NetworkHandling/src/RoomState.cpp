@@ -14,7 +14,6 @@ void RoomState::ChangeState(RoomState* newState)
 	}
 }
 
-
 /**
 DefaultRoomState -- Does nothing by itself
 **/
@@ -63,15 +62,29 @@ void VisualRoomState::PlayerEntered(Player* entered)
 	s1::ShapeDisplay * display = _visualPart->AddCube(vec3(GetSize(), 0, 0), vec3(1, 1, 1));
 	_allShapes[entered] = display;
 	std::ostringstream oss;
-	oss << "STRT" << _epochMilliStart;
-	oss << "#";
-	oss << display->GetPosition().x;
-	oss << "#";
-	oss << display->GetPosition().y;
-	oss << "#";
-	oss << display->GetPosition().z;
-	oss << "#!";
-	entered->Send(oss.str().c_str(), oss.str().size(), NetworkProtocol::UDP);
+
+	//No one was here before
+	if (_allShapes.size() == 1)
+	{
+		//Notify that the player was created
+		oss << "STRT";
+		entered->Send(oss.str().c_str(), oss.str().size(), NetworkProtocol::UDP);
+	}
+	else
+	{
+		oss << "JOIN" << _tick;
+		oss << "#" << entered->GetId();
+		oss << "#" << _allShapes[entered]->GetPosition().x;
+		oss << "#" << _allShapes[entered]->GetPosition().y;
+		oss << "#" << _allShapes[entered]->GetPosition().z;
+
+		//Notify everyone that someone joined
+		std::map<Player*, s1::ShapeDisplay*>::iterator it;
+		for (it = _allShapes.begin(); it != _allShapes.end(); it++)
+		{
+			it->first->Send(oss.str().c_str(), oss.str().size(), NetworkProtocol::UDP);
+		}
+	}
 }
 
 void VisualRoomState::PlayerLeft(Player* left)
@@ -131,8 +144,11 @@ void VisualRoomState::Tick()
 		ss << it->second->GetPosition().z;
 		ss << "#|";
 	}
-	std::cout << ss.str() << std::endl;
-	_allShapes.begin()->first->Send(ss.str().c_str(), ss.str().size(), NetworkProtocol::UDP);
+
+	for (it = _allShapes.begin(); it != _allShapes.end(); it++)
+	{
+		it->first->Send(ss.str().c_str(), ss.str().size(), NetworkProtocol::UDP);
+	}
 }
 
 void VisualRoomState::InterpretCommand(Command command)

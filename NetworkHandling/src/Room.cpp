@@ -36,3 +36,10 @@ bool Room::RequestEnter(Player * player)
 {
 	return (_maxPlayer > _roomState->GetSize() && player->GetPlayerState() == PlayerState::InLobby);
 }
+
+std::string Room::Serialize()
+{
+	std::ostringstream oss;
+	oss << _id << "#" << _roomState->GetSize() << "/" << _maxPlayer << "|";
+	return oss.str();
+}

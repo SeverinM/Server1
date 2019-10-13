@@ -25,5 +25,6 @@ class Room : public PlayerPlace
 				_roomState->InterpretCommand(cmd);
 			}
 		};
+		std::string Serialize();
 		void Tick();
 };
