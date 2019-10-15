@@ -45,6 +45,7 @@ class Player
 		PlayerPlace* _place = NULL;
 		PlayerState _state = PlayerState::InServer;
 		unsigned int _id;
+		sf::Socket::Status _status;
 
 	public:
 		Player(sf::TcpSocket* sock);
@@ -60,6 +61,7 @@ class Player
 		void ResetTimeout();
 		void Send(const char* data, unsigned int size, NetworkProtocol protocol);
 		void ChangePlace(PlayerPlace* pp);
+		inline bool isDisconnected() { return _status == sf::Socket::Disconnected; }
 		~Player();
 		std::string GetHexaId();
 };

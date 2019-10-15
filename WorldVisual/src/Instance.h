@@ -35,6 +35,7 @@ namespace s1
 			void Init(std::string path = "./src/shader");
 			ShapeDisplay * AddCube(vec3 position, vec3 size);
 			int Update(float elapsed);
+			void Delete(ShapeDisplay* sd);
 
 			//Inline methods
 			inline GLFWwindow* GetWindow() { return _window; }

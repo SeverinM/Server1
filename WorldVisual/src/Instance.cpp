@@ -164,6 +164,14 @@ void Instance::MouseCursor(GLFWwindow* window, double xpos, double ypos)
 	inst->SetDeltaMouse(xpos, ypos);
 }
 
+void Instance::Delete(ShapeDisplay* sd)
+{
+	_it = std::find(_allShapes.begin(), _allShapes.end(), sd);
+	_allShapes.erase(_it);
+	delete sd;
+	sd = NULL;
+}
+
 ShapeDisplay * Instance::AddCube(vec3 position, vec3 size)
 {
 	ShapeDisplay* display = ShapeDisplay::CreateCube(_shader);

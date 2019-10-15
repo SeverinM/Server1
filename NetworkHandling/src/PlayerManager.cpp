@@ -26,6 +26,13 @@ void PlayerManager::Update(double elapsed)
 			Kill(it);
 			continue;
 		}
+
+		if (plyr->isDisconnected())
+		{
+			std::cout << plyr->getSocket()->getRemoteAddress() << "disconnected" << std::endl;
+			Kill(it);
+			continue;
+		}
 		it++;
 
 		//Received something via TCP

@@ -22,6 +22,7 @@ bool Player::TimeoutUpdate(float elapsed)
 		ResetTimeout();
 		return true;
 	}
+
 	return false;
 }
 
@@ -29,7 +30,8 @@ PlayerPacket* Player::GetNextReceivedPacket()
 {
 	char data[100];
 	size_t sizeReceived;
-	if (_connection->receive(data, 100, sizeReceived) == sf::Socket::Done)
+	_status = _connection->receive(data, 100, sizeReceived);
+	if (_status == sf::Socket::Done)
 	{
 		PlayerPacket* pp = new PlayerPacket();
 		pp->content = std::string(data).substr(0, sizeReceived);
