@@ -137,6 +137,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="src\BasicPhysic.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\BasicPhysic.h" />
+    <ClInclude Include="src\TransfProxy.h" />
+    <ClInclude Include="src\WorldHolder.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

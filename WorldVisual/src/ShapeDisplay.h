@@ -2,6 +2,8 @@
 #include "Shader.h"
 #include "Camera.h"
 #include "VertexArray.h"
+#define _USE_MATH_DEFINES
+#include <math.h>
 
 namespace s1
 {

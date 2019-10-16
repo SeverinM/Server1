@@ -93,6 +93,15 @@ void VisualRoomState::PlayerLeft(Player* left)
 	std::map<Player*, s1::ShapeDisplay*>::iterator it;
 	it = _allShapes.find(left);
 	_visualPart->Delete(it->second);
+	std::ostringstream oss;
+	oss << "LEFT" << left->GetId();
+
+	//Notify everyone that someone joined
+	for (it = _allShapes.begin(); it != _allShapes.end(); it++)
+	{
+		it->first->Send(oss.str().c_str(), oss.str().size(), NetworkProtocol::UDP);
+	}
+
 	_allShapes.erase(it);
 }
 

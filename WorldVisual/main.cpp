@@ -9,6 +9,7 @@ int main()
 {
 	Instance* instance = new Instance(800,600);
 	instance->Init();
+	instance->AddCube(glm::vec3(), glm::vec3(0.1, 0.1, 0.1));
 
 	while (!instance->Update(0.1))
 	{
