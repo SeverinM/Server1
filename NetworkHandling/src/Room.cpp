@@ -28,8 +28,6 @@ void Room::PlayerEnter(Player* player)
 {
 	player->SetPlayerState(PlayerState::InRoom);
 	_roomState->PlayerEntered(player);
-	string ent = "Entered room";
-	player->Send(ent.c_str(), ent.size(), NetworkProtocol::UDP);
 }
 
 bool Room::RequestEnter(Player * player)

@@ -41,15 +41,20 @@ int main()
 		t1 = chrono::steady_clock::now();
 		seconds = delta / (double)1000000.0;
 		accumulatedTime += seconds;
+
+		//Server tick
 		while (accumulatedTime >= Consts::deltaTick)
 		{
 			Consts::lastTick = chrono::duration_cast<chrono::milliseconds>(chrono::system_clock::now().time_since_epoch()).count();
 			accumulatedTime -= Consts::deltaTick;
 			nI->GetLobby()->Tick();
 		}
+
+		//Other updates
 		nf->Update();
 		pM->Update(seconds);
 		nI->Update(seconds);
+		buffer->Update(seconds);
 
 		t2 = chrono::steady_clock::now();
 		delta = chrono::duration_cast<chrono::microseconds>(t2 - t1).count();

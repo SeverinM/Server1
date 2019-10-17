@@ -13,6 +13,7 @@ public:
 	void TransmitCommand(Command cmd) override {};
 	Room * CreateRoom(unsigned int nbPlayer);
 	void Tick();
+	std::string SerializeRooms();
 
 protected:
 	std::list<Player*> _allPlayers;

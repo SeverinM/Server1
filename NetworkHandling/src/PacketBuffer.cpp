@@ -3,6 +3,7 @@
 PacketBuffer::PacketBuffer(unsigned int maxSize)
 {
 	_size = maxSize;
+	_modifier = new NetworkModifier(&_packets);
 }
 
 PlayerPacket* PacketBuffer::Pop()
@@ -18,5 +19,5 @@ PlayerPacket* PacketBuffer::Pop()
 void PacketBuffer::Insert(PlayerPacket* packet)
 {
 	if (_packets.size() < _size)
-		_packets.push(packet);
+		_modifier->AddPacket(packet);
 }

@@ -144,6 +144,7 @@
     <ClCompile Include="src\Lobby.cpp" />
     <ClCompile Include="src\NetFix.cpp" />
     <ClCompile Include="src\NetInput.cpp" />
+    <ClCompile Include="src\NetworkModifier.cpp" />
     <ClCompile Include="src\PacketBuffer.cpp" />
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\PlayerManager.cpp" />
@@ -156,6 +157,7 @@
     <ClInclude Include="src\Lobby.h" />
     <ClInclude Include="src\NetFix.h" />
     <ClInclude Include="src\NetInput.h" />
+    <ClInclude Include="src\NetworkModifier.h" />
     <ClInclude Include="src\PacketBuffer.h" />
     <ClInclude Include="src\Player.h" />
     <ClInclude Include="src\PlayerManager.h" />

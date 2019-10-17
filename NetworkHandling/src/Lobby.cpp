@@ -1,5 +1,6 @@
 #include "Lobby.h"
 #include "PlayerManager.h"
+#include <sstream>
 
 void Lobby::PlayerLeft( Player * player)
 {
@@ -15,7 +16,8 @@ void Lobby::PlayerEnter(Player* player)
 	std::cout << "Entering lobby" << std::endl;
 	player->SetPlayerState(PlayerState::InLobby);
 	_allPlayers.push_back(player);
-	player->Send("Entered lobby", 100, NetworkProtocol::UDP);
+	std::string str = SerializeRooms();
+	player->Send(str.c_str() , str.size(), NetworkProtocol::UDP);
 }
 
 Room* Lobby::CreateRoom(unsigned int nbPlayer)
@@ -38,4 +40,16 @@ void Lobby::Tick()
 		(*it)->Tick();
 		it++;
 	}
+}
+
+std::string Lobby::SerializeRooms()
+{
+	std::ostringstream oss;
+	std::list<Room*>::iterator it;
+	oss << "LBY";
+	for (it = _rooms.begin(); it != _rooms.end(); it++)
+	{
+		oss << (*it)->Serialize();
+	}
+	return oss.str();
 }
