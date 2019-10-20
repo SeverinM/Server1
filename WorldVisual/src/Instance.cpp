@@ -49,7 +49,7 @@ void Instance::Init(std::string path)
 	glEnable(GL_DEPTH_TEST);
 	_shader = new Shader(path);
 	_cam = new Camera(_height, _width);
-	_cam->SetPosition(vec3(10, 10, 20));
+	_cam->SetPosition(vec3(5, 5, 10));
 
 	axis[0] = Instance::AddCube(glm::vec3(), glm::vec3(100, 0.01, 0.01));
 	axis[1] = Instance::AddCube(glm::vec3(), glm::vec3(0.01, 100, 0.01));
@@ -77,7 +77,6 @@ int Instance::Update(float elapsed)
 
 	axis[2]->GetShader()->SetVec3("color", glm::vec3(0, 0, 1));
 	axis[2]->Render(_cam, _mat);
-
 
 	_shader->SetVec3("color", glm::vec3());
 	for (_it = _allShapes.begin(); _it != _allShapes.end(); _it++)
