@@ -67,7 +67,7 @@ void VisualRoomState::PlayerEntered(Player* entered)
 	if (_allShapes.size() == 1)
 	{
 		//Notify that the player was created
-		oss << "STRT";
+		oss << "STRT" << entered->GetHexaId() << "#0#0#0#";
 		entered->Send(oss.str().c_str(), oss.str().size(), NetworkProtocol::UDP);
 	}
 	else
@@ -95,14 +95,13 @@ void VisualRoomState::PlayerLeft(Player* left)
 	_visualPart->Delete(it->second);
 	std::ostringstream oss;
 	oss << "LEFT" << left->GetId();
+	_allShapes.erase(it);
 
-	//Notify everyone that someone joined
+	//Notify everyone that someone left
 	for (it = _allShapes.begin(); it != _allShapes.end(); it++)
 	{
 		it->first->Send(oss.str().c_str(), oss.str().size(), NetworkProtocol::UDP);
 	}
-
-	_allShapes.erase(it);
 }
 
 bool VisualRoomState::Init()

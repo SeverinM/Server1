@@ -67,13 +67,9 @@ void Player::ChangePlace(PlayerPlace* pp)
 	if (pp != NULL)
 	{
 		pp->PlayerEnter(this);
-	}
-	else
-	{
-		_connection->disconnect();
+		_place = pp;
 	}
 
-	_place = pp;
 }
 
 void Player::AddCommand(Command command)
