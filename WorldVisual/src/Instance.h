@@ -27,6 +27,7 @@ namespace s1
 			glm::vec2 _deltaPosition;
 			std::vector<ShapeDisplay*> _allShapes;
 			std::vector<ShapeDisplay*>::iterator _it;
+			ShapeDisplay * axis[3];
 			static bool _contextInitialized;
 
 		public:

@@ -1,5 +1,6 @@
 #include "NetworkModifier.h"
 #include <cstdlib>
+#include <stdio.h>
 
 NetworkModifier::NetworkModifier(std::queue<PlayerPacket*>* firstPP, float min, float max, float loss, float random)
 {

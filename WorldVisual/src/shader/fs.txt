@@ -5,8 +5,16 @@ in vec3 truePos;
 
 uniform mat4 v;
 uniform mat4 p;
+uniform vec3 color = vec3(0,0,0);
 
 void main()
 {
-    FragColor = vec4(truePos, 1.0f);
+	if (color != vec3(0,0,0))
+	{
+		FragColor = vec4(color, 1.0f);
+	}
+	else
+	{
+		FragColor = vec4(truePos, 1.0f);
+	}
 } 

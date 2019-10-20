@@ -49,7 +49,11 @@ void Instance::Init(std::string path)
 	glEnable(GL_DEPTH_TEST);
 	_shader = new Shader(path);
 	_cam = new Camera(_height, _width);
-	_cam->SetPosition(vec3(5, -1, 1));
+	_cam->SetPosition(vec3(10, 10, 20));
+
+	axis[0] = Instance::AddCube(glm::vec3(), glm::vec3(100, 0.01, 0.01));
+	axis[1] = Instance::AddCube(glm::vec3(), glm::vec3(0.01, 100, 0.01));
+	axis[2] = Instance::AddCube(glm::vec3(), glm::vec3(0.01, 0.01, 100));
 }
 
 int Instance::Update(float elapsed)
@@ -64,6 +68,18 @@ int Instance::Update(float elapsed)
 	_cam->Update(elapsed);
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	axis[0]->GetShader()->SetVec3("color", glm::vec3(1, 0, 0));
+	axis[0]->Render(_cam, _mat);
+
+	axis[1]->GetShader()->SetVec3("color", glm::vec3(0, 1, 0));
+	axis[1]->Render(_cam, _mat);
+
+	axis[2]->GetShader()->SetVec3("color", glm::vec3(0, 0, 1));
+	axis[2]->Render(_cam, _mat);
+
+
+	_shader->SetVec3("color", glm::vec3());
 	for (_it = _allShapes.begin(); _it != _allShapes.end(); _it++)
 	{
 		(*_it)->Render(_cam, _mat);

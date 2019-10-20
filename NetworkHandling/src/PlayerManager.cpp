@@ -71,6 +71,7 @@ void PlayerManager::AddPlayer(sf::TcpSocket* sock)
 	player->SetId(tempId);
 	std::stringstream ss;
 	ss << std::hex << tempId;
+	ss << "!";
 	string idStr = ss.str();
 	while (idStr.size() < BYTES_ID * 2)
 	{

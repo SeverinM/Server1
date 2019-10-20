@@ -27,6 +27,7 @@ namespace s1
 		void SetScale(vec3 newScale, bool relative = false);
 		mat4 GetMatrix();
 		inline vec3 GetPosition() { return _position; }
+		inline Shader* GetShader() { return _shader; }
 
 		static ShapeDisplay* CreateCube(Shader* sh)
 		{

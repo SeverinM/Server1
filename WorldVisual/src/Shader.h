@@ -29,6 +29,13 @@ namespace s1
 			glUniform1f(location, value);
 		}
 
+		inline void SetVec3(const char* name, glm::vec3 value)
+		{
+			int location = glGetUniformLocation(_id, name);
+			Use();
+			glUniform3f(location, value.x, value.y, value.z);
+		}
+
 		inline void SetMatrix(const char* name, glm::mat4 mat)
 		{
 			Use();
