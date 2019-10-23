@@ -1,13 +1,16 @@
 #include "ShapeDisplay.h"
+#include "BasicPhysic.h"
+#include <stdio.h>
 
 using namespace s1;
 
-ShapeDisplay::ShapeDisplay(VAO* vao, Shader* sh, unsigned int sizeElement, bool useIndex)
+ShapeDisplay::ShapeDisplay(VAO* vao, Shader* sh, unsigned int sizeElement, bool useIndex, TransfProxy* transfProxy)
 {
 	_vao = vao;
 	_shader = sh;
 	_size = sizeElement;
 	_useIndex = useIndex;
+	_proxy = transfProxy;
 }
 
 ShapeDisplay::~ShapeDisplay()
@@ -36,9 +39,28 @@ void ShapeDisplay::SetPosition(vec3 newPosition, bool relative)
 		_position = newPosition;
 }
 
+
+void ShapeDisplay::AddPhysic(float mass)
+{
+	if (_proxy == NULL)
+	{
+		_proxy = new BasicPhysic(rp3d::Vector3(_position.x, _position.y, _position.z), rp3d::Vector3(_scale.x, _scale.y, _scale.z), mass);
+	}
+}
+
 mat4 ShapeDisplay::GetMatrix()
 {
+	Vector3 axis;
+	float angle;
+
 	mat4 modelMatrix = glm::identity<mat4>();
+	if (_proxy != NULL)
+	{
+		_proxy->Update(0.1);
+		modelMatrix = _proxy->GetMatrix();
+		return modelMatrix;
+	}
+
 	modelMatrix = scale(modelMatrix, _scale);
 	modelMatrix = translate(modelMatrix, _position);
 	return modelMatrix;

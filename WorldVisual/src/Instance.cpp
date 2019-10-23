@@ -1,5 +1,6 @@
 #include "Instance.h"
 #include "glm/glm.hpp"
+#include "WorldHolder.h"
 
 using namespace s1;
 
@@ -64,11 +65,14 @@ int Instance::Update(float elapsed)
 		_cam->Rotate(glm::vec3(0, 0, 1), _deltaPosition.x * elapsed * 0.1);
 		_cam->Rotate(_cam->GetRight(), _deltaPosition.y * elapsed * 0.1);
 	}
+	
+	WorldHolder::GetInstance()->update(elapsed);
 
 	_cam->Update(elapsed);
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+	//Display axis
 	axis[0]->GetShader()->SetVec3("color", glm::vec3(1, 0, 0));
 	axis[0]->Render(_cam, _mat);
 
@@ -77,7 +81,8 @@ int Instance::Update(float elapsed)
 
 	axis[2]->GetShader()->SetVec3("color", glm::vec3(0, 0, 1));
 	axis[2]->Render(_cam, _mat);
-
+	
+	//Display all cubes
 	_shader->SetVec3("color", glm::vec3());
 	for (_it = _allShapes.begin(); _it != _allShapes.end(); _it++)
 	{

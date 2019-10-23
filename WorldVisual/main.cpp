@@ -2,20 +2,20 @@
 #include "src/Shader.h"
 #include "src//VertexArray.h"
 #include "src/VertexBuffer.h"
-
-#include "reactphysics3d.h"
+#include "WorldHolder.h"
 
 using namespace s1;
 
 int main()
 {
-	rp3d::DynamicsWorld * world = new rp3d::DynamicsWorld(rp3d::Vector3(0, -9.8, 0));
 	Instance* instance = new Instance(800,600);
 	instance->Init();
-	instance->AddCube(glm::vec3(), glm::vec3(0.1, 0.1, 0.1));
+	ShapeDisplay * sd = instance->AddCube(glm::vec3(), glm::vec3(0.1, 0.1, 0.1));
+	sd->AddPhysic(1);
 
 	while (!instance->Update(0.1))
 	{
+		WorldHolder::GetInstance()->update(0.00000001);
 	}
 
 	return 0;

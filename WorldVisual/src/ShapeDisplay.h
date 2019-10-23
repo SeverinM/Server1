@@ -4,6 +4,7 @@
 #include "VertexArray.h"
 #define _USE_MATH_DEFINES
 #include <math.h>
+#include "TransfProxy.h"
 
 namespace s1
 {
@@ -18,13 +19,15 @@ namespace s1
 		VAO* _vao;
 		bool _useIndex = false;
 		unsigned int _size = 0;
+		TransfProxy* _proxy;
 
 	public:
-		ShapeDisplay(VAO* vao, Shader* sh, unsigned int sizeElement, bool useIndex);
+		ShapeDisplay(VAO* vao, Shader* sh, unsigned int sizeElement, bool useIndex, TransfProxy* transfProxy = NULL);
 		~ShapeDisplay();
 		void Render(Camera* cam, mat4 projection);
 		void SetPosition(vec3 newPosition, bool relative = false);
 		void SetScale(vec3 newScale, bool relative = false);
+		void AddPhysic(float mass);
 		mat4 GetMatrix();
 		inline vec3 GetPosition() { return _position; }
 		inline Shader* GetShader() { return _shader; }

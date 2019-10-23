@@ -1,5 +1,7 @@
 #include "BasicPhysic.h"
 #include "WorldHolder.h"
+#include "glm/glm.hpp"
+#include <glm/gtc/type_ptr.hpp>
 
 BasicPhysic::BasicPhysic(Vector3 position, Vector3 size, float mass)
 {
@@ -11,5 +13,6 @@ BasicPhysic::BasicPhysic(Vector3 position, Vector3 size, float mass)
 
 void BasicPhysic::Update(float elapsed)
 {
-
+	float* value = (float*)glm::value_ptr(modelMatrix);
+	rb->getTransform().getOpenGLMatrix(value);
 }

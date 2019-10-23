@@ -13,7 +13,7 @@ class WorldHolder
 		{
 			if (world == NULL)
 			{
-				world = new DynamicsWorld(Vector3(0.0, -9.81, 0.0));
+				world = new DynamicsWorld(Vector3(0.0, 0.0, -1.01));
 			}
 			return world;
 		}
