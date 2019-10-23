@@ -40,11 +40,12 @@ void ShapeDisplay::SetPosition(vec3 newPosition, bool relative)
 }
 
 
-void ShapeDisplay::AddPhysic(float mass)
+void ShapeDisplay::AddPhysic(float mass, BodyType bt)
 {
 	if (_proxy == NULL)
 	{
 		_proxy = new BasicPhysic(rp3d::Vector3(_position.x, _position.y, _position.z), rp3d::Vector3(_scale.x, _scale.y, _scale.z), mass);
+		dynamic_cast<BasicPhysic*>(_proxy)->SetState(bt);
 	}
 }
 

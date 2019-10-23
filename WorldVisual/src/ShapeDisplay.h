@@ -27,7 +27,7 @@ namespace s1
 		void Render(Camera* cam, mat4 projection);
 		void SetPosition(vec3 newPosition, bool relative = false);
 		void SetScale(vec3 newScale, bool relative = false);
-		void AddPhysic(float mass);
+		void AddPhysic(float mass, BodyType bt = BodyType::DYNAMIC);
 		mat4 GetMatrix();
 		inline vec3 GetPosition() { return _position; }
 		inline Shader* GetShader() { return _shader; }

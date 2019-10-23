@@ -14,5 +14,7 @@ class TransfProxy
 
 	public:
 		virtual void Update(float elapsed) = 0;
+		inline glm::vec3 GetPosition() { return glm::vec3(_position.x, _position.y, _position.z); }
+		inline glm::vec3 GetScale() { return glm::vec3(_size.x, _size.y, _size.z); }
 		inline glm::mat4 GetMatrix() { return modelMatrix; }
 };
