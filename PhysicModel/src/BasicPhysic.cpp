@@ -25,9 +25,10 @@ void BasicPhysic::Update(float elapsed)
 	float* value = (float*)glm::value_ptr(modelMatrix);
 	rb->getTransform().getOpenGLMatrix(value);
 	modelMatrix = glm::scale(modelMatrix, glm::vec3(_size.x, _size.y, _size.z));
+	modelMatrix = glm::translate(modelMatrix, glm::vec3(-_size.x / 20.0, -_size.y / 20.0, -_size.z / 20.0));
 }
 
 void BasicPhysic::SetRotation(float xRot, float yRot, float zRot)
 {
-	rb->setTransform(Transform(_position, rp3d::Quaternion::fromEulerAngles(glm::degrees(xRot), glm::degrees(yRot), glm::degrees(zRot))));
+	rb->setTransform(Transform(_position, rp3d::Quaternion::fromEulerAngles(glm::radians(xRot), glm::radians(yRot), glm::radians(zRot))));
 }
