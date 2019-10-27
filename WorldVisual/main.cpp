@@ -13,11 +13,10 @@ int main()
 	ShapeDisplay * sd = instance->AddCube(glm::vec3(2,2,2), glm::vec3(0.5, 0.5, 0.5));
 	sd->AddPhysic(100);
 	ShapeDisplay* ground = instance->AddCube(glm::vec3(0, 0, -2), glm::vec3(10, 10, 1));
-	ground->AddPhysic(100, BodyType::KINEMATIC, glm::radians(45.0),0,0);
+	ground->AddPhysic(100, BodyType::KINEMATIC, glm::radians(10.0),0,0);
 
 	while (!instance->Update(0.1))
 	{
-		WorldHolder::GetInstance()->update(0.1);
 	}
 
 	return 0;
