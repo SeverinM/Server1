@@ -40,12 +40,13 @@ void ShapeDisplay::SetPosition(vec3 newPosition, bool relative)
 }
 
 
-void ShapeDisplay::AddPhysic(float mass, BodyType bt)
+void ShapeDisplay::AddPhysic(float mass, BodyType bt, float xRot , float yRot , float zRot)
 {
 	if (_proxy == NULL)
 	{
 		_proxy = new BasicPhysic(rp3d::Vector3(_position.x, _position.y, _position.z), rp3d::Vector3(_scale.x, _scale.y, _scale.z), mass);
 		dynamic_cast<BasicPhysic*>(_proxy)->SetState(bt);
+		dynamic_cast<BasicPhysic*>(_proxy)->SetRotation(xRot, yRot, zRot);
 	}
 }
 
@@ -61,9 +62,11 @@ mat4 ShapeDisplay::GetMatrix()
 		modelMatrix = _proxy->GetMatrix();
 		return modelMatrix;
 	}
-
-	modelMatrix = scale(modelMatrix, _scale);
-	modelMatrix = translate(modelMatrix, _position);
+	else
+	{
+		modelMatrix = scale(modelMatrix, _scale);
+		modelMatrix = translate(modelMatrix, _position);
+	}	
 	return modelMatrix;
 }
 

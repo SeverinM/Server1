@@ -13,6 +13,7 @@ class BasicPhysic : public TransfProxy
 	public :
 		BasicPhysic(Vector3 position, Vector3 size = Vector3(1, 1, 1), float mass = 1);
 		void Update(float elapsed);
+		void SetRotation(float xRot, float yRot, float zRot);
 		inline void SetState(BodyType bt)
 		{
 			rb->setType(bt);

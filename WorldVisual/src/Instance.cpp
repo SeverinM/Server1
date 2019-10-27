@@ -50,7 +50,7 @@ void Instance::Init(std::string path)
 	glEnable(GL_DEPTH_TEST);
 	_shader = new Shader(path);
 	_cam = new Camera(_height, _width);
-	_cam->SetPosition(vec3(5, 5, 10));
+	_cam->SetPosition(vec3(10, 10, 20));
 
 	axis[0] = Instance::AddCube(glm::vec3(), glm::vec3(100, 0.01, 0.01));
 	axis[1] = Instance::AddCube(glm::vec3(), glm::vec3(0.01, 100, 0.01));
