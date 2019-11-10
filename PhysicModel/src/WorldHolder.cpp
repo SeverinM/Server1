@@ -1,3 +1,3 @@
 #include "WorldHolder.h"
 
-DynamicsWorld * WorldHolder::world = NULL;
+CollisionWorld * WorldHolder::world = NULL;

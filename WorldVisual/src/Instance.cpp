@@ -65,8 +65,6 @@ int Instance::Update(float elapsed)
 		_cam->Rotate(glm::vec3(0, 0, 1), _deltaPosition.x * elapsed * 0.1);
 		_cam->Rotate(_cam->GetRight(), _deltaPosition.y * elapsed * 0.1);
 	}
-	
-	WorldHolder::GetInstance()->update(0.01);
 
 	_cam->Update(elapsed);
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);

@@ -6,14 +6,14 @@ using namespace rp3d;
 class WorldHolder
 {
 	private :
-		static DynamicsWorld* world;
+		static CollisionWorld * world;
 
 	public:
-		static DynamicsWorld * GetInstance()
+		static CollisionWorld * GetInstance()
 		{
 			if (world == NULL)
 			{
-				world = new DynamicsWorld(Vector3(0.0, 0.0, -9.8));
+				world = new CollisionWorld();
 			}
 			return world;
 		}

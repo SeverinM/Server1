@@ -7,8 +7,8 @@ using namespace rp3d;
 class TransfProxy
 {
 	protected :
-		Vector3 _position;
-		Vector3 _size;
+		rp3d::Vector3 _position;
+		rp3d::Vector3 _size;
 		Quaternion _rotation;
 		glm::mat4 modelMatrix;
 

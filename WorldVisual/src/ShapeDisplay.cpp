@@ -33,10 +33,17 @@ void ShapeDisplay::Render(Camera * cam, mat4 projection)
 
 void ShapeDisplay::SetPosition(vec3 newPosition, bool relative)
 {
-	if (relative)
-		_position += newPosition;
+	if (_proxy == NULL)
+	{
+		if (relative)
+			_position += newPosition;
+		else
+			_position = newPosition;
+	}
 	else
-		_position = newPosition;
+	{
+		dynamic_cast<BasicPhysic*>(_proxy)->SetPosition(rp3d::Vector3(newPosition.x , newPosition.y , newPosition.z), relative);
+	}
 }
 
 

@@ -11,9 +11,7 @@ int main()
 	Instance* instance = new Instance(800,600);
 	instance->Init();
 	ShapeDisplay * sd = instance->AddCube(glm::vec3(0,0,1), glm::vec3(0.5, 0.5, 0.5));
-	sd->AddPhysic(100, BodyType::DYNAMIC , 10, 0,0);
-	ShapeDisplay* ground = instance->AddCube(glm::vec3(0, 0, -2), glm::vec3(10, 10, 1));
-	ground->AddPhysic(100, BodyType::KINEMATIC, 20,0,0);
+	ShapeDisplay* ground = instance->AddCube(glm::vec3(0, 0, -2), glm::vec3(10, 10, 0.1));
 
 	while (!instance->Update(0.1))
 	{
