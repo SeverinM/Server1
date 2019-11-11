@@ -10,9 +10,20 @@ void NetInput::Update(double elapsed)
 		{
 			packet->player->ChangePlace(&_lobby);
 		}
+
+		//Temporary
 		else if (packet->content == CREATE_ROOM)
 		{
-			Room* rm = _lobby.CreateRoom(2);
+			Room* rm;
+			if (_lobby.GetFirstRoom() == NULL)
+			{
+				rm = _lobby.CreateRoom(2);
+			}
+			else
+			{
+				rm = _lobby.GetFirstRoom();
+			}
+
 			if (rm->RequestEnter(packet->player))
 			{
 				packet->player->ChangePlace(rm);

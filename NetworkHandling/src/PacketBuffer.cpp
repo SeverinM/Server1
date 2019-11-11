@@ -3,7 +3,7 @@
 PacketBuffer::PacketBuffer(unsigned int maxSize)
 {
 	_size = maxSize;
-	_modifier = new NetworkModifier(&_packets, 0, 0, 50, 0);
+	_modifier = new NetworkModifier(&_packets, 0, 0, 0, 0);
 }
 
 PlayerPacket* PacketBuffer::Pop()

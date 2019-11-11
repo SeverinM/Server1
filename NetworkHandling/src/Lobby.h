@@ -14,6 +14,11 @@ public:
 	Room * CreateRoom(unsigned int nbPlayer);
 	void Tick();
 	std::string SerializeRooms();
+	inline Room * GetFirstRoom() {
+		if (_rooms.size() > 0)
+			return _rooms.front();
+		return NULL;
+	}
 
 protected:
 	std::list<Player*> _allPlayers;
