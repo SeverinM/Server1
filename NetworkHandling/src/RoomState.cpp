@@ -82,8 +82,19 @@ void VisualRoomState::PlayerEntered(Player* entered)
 		std::map<Player*, s1::ShapeDisplay*>::iterator it;
 		for (it = _allShapes.begin(); it != _allShapes.end(); it++)
 		{
-			it->first->Send(oss.str().c_str(), oss.str().size(), NetworkProtocol::UDP);
+			if (it->first->GetId() != entered->GetId())
+				it->first->Send(oss.str().c_str(), oss.str().size(), NetworkProtocol::UDP);
 		}
+
+		std::ostringstream oss2;
+
+		oss2 << "RESU" << _tick << "|";
+		for (it = _allShapes.begin(); it != _allShapes.end(); it++)
+		{
+			oss2 << it->first->GetId() << "#" << it->second->GetPosition().x << "#" << it->second->GetPosition().y << "#" << it->second->GetPosition().z << "|";
+		}
+
+		entered->Send(oss2.str().c_str(), oss2.str().size(), NetworkProtocol::UDP);
 	}
 }
 
@@ -136,7 +147,7 @@ void VisualRoomState::Tick()
 {
 	_tick++;
 	_visualPart->Update(Consts::deltaTick);
-	std::map<Player*, s1::ShapeDisplay*>::iterator it;
+	/*std::map<Player*, s1::ShapeDisplay*>::iterator it;
 	if (_allShapes.size() == 0)
 		return;
 
@@ -158,7 +169,7 @@ void VisualRoomState::Tick()
 	for (it = _allShapes.begin(); it != _allShapes.end(); it++)
 	{
 		it->first->Send(ss.str().c_str(), ss.str().size(), NetworkProtocol::UDP);
-	}
+	}*/
 }
 
 void VisualRoomState::InterpretCommand(Command command)
