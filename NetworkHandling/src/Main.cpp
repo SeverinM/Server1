@@ -1,11 +1,11 @@
-#include "src/NetFix.h"
-#include "src/NetInput.h"
+#include "NetFix.h"
+#include "NetInput.h"
 #include <iostream>
 #include <string>
 #include <thread>
 #include <chrono>
-#include "src/Utils.h"
-#include "src/PacketBuffer.h"
+#include "Utils.h"
+#include "PacketBuffer.h"
 
 #include "Instance.h"
 

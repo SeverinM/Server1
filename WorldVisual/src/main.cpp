@@ -1,7 +1,7 @@
-#include "src/Instance.h"
-#include "src/Shader.h"
-#include "src//VertexArray.h"
-#include "src/VertexBuffer.h"
+#include "Instance.h"
+#include "Shader.h"
+#include "VertexArray.h"
+#include "VertexBuffer.h"
 #include "WorldHolder.h"
 
 using namespace s1;
