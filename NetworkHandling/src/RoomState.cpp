@@ -147,7 +147,7 @@ void VisualRoomState::Tick()
 {
 	_tick++;
 	_visualPart->Update(Consts::deltaTick);
-	/*std::map<Player*, s1::ShapeDisplay*>::iterator it;
+	std::map<Player*, s1::ShapeDisplay*>::iterator it;
 	if (_allShapes.size() == 0)
 		return;
 
@@ -169,7 +169,7 @@ void VisualRoomState::Tick()
 	for (it = _allShapes.begin(); it != _allShapes.end(); it++)
 	{
 		it->first->Send(ss.str().c_str(), ss.str().size(), NetworkProtocol::UDP);
-	}*/
+	}
 }
 
 void VisualRoomState::InterpretCommand(Command command)
