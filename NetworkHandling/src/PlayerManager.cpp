@@ -22,8 +22,11 @@ void PlayerManager::Update(double elapsed)
 		//Timeout verification
 		if (plyr->TimeoutUpdate(elapsed))
 		{
+			std::map<unsigned int, Player*>::iterator itTemp = it;
+			itTemp++;
 			std::cout << plyr->getSocket()->getRemoteAddress() << " disconnected (timeout) " << std::endl;
 			Kill(it);
+			it = itTemp;
 			continue;
 		}
 

@@ -100,7 +100,6 @@ void VisualRoomState::PlayerEntered(Player* entered)
 
 void VisualRoomState::PlayerLeft(Player* left)
 {
-	std::cout << "Left" << std::endl;
 	std::map<Player*, s1::ShapeDisplay*>::iterator it;
 	it = _allShapes.find(left);
 	_visualPart->Delete(it->second);
