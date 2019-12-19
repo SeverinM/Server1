@@ -151,7 +151,7 @@ void VisualRoomState::Tick()
 		return;
 
 	std::stringstream ss;
-	ss << _tick;
+	ss << "UPDT" << _tick;
 	ss << "|";
 	for (it = _allShapes.begin(); it != _allShapes.end(); it++)
 	{
