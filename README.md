@@ -22,14 +22,13 @@ Only tested on windows 10 64 bits right now but can work on every plateform.
 
 1. Pull this repository
 2. Generate the project using CMake
-
-(This part will be removed soon)
 3. fill each lib folder with the correct library
 4. do the same for the .so / .dll files
 5. move the shader folder into (YOUR_BUILD_PATH)/NetworkHandling/
-
 6. Compile PhysicModel , then Visual World , then NetworkHandling
 7. That's all !
+
+(* Parts 3-5 will be removed soon*)
 
 ### Client part ###
 
