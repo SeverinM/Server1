@@ -28,7 +28,7 @@ Only tested on windows 10 64 bits right now but can work on every plateform.
 6. Compile PhysicModel , then Visual World , then NetworkHandling
 7. That's all !
 
-(* Parts 3-5 will be removed soon*)
+(*Parts 3-5 will be removed soon*)
 
 ### Client part ###
 
