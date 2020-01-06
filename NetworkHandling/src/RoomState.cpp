@@ -86,8 +86,8 @@ void VisualRoomState::PlayerEntered(Player* entered)
 				it->first->Send(oss.str().c_str(), oss.str().size(), NetworkProtocol::UDP);
 		}
 
+		//Notify to the new player who is where
 		std::ostringstream oss2;
-
 		oss2 << "RESU" << _tick << "|";
 		for (it = _allShapes.begin(); it != _allShapes.end(); it++)
 		{
@@ -118,7 +118,7 @@ bool VisualRoomState::Init()
 {
 	_epochMilliStart = Consts::lastTick;
 	_visualPart = new s1::Instance(800, 600);
-	_visualPart->Init("../WorldVisual/src/shader");
+	_visualPart->Init("./shader");
 	_isInit = true;
 	return true;
 }

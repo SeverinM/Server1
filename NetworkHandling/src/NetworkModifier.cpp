@@ -27,6 +27,9 @@ void NetworkModifier::Update(float elapsed)
 		{
 			_pp->push(it->second);
 			_bufferLag.erase(it);
+
+			//TODO : find better iteration
+			it = _bufferLag.begin();
 			continue;
 		}
 		it++;
@@ -43,6 +46,9 @@ void NetworkModifier::AddPacket(PlayerPacket* pp)
 		return;
 	}
 
+	if (_step == 0)
+		_step = 5;
+
 	if (_minLag == 0 && _maxLag == 0)
 	{
 		_pp->push(pp);
@@ -50,6 +56,6 @@ void NetworkModifier::AddPacket(PlayerPacket* pp)
 	else
 	{
 		float randomLag = (rand() % (int)_step) + _minLag;
-		_bufferLag.push_back(std::pair(randomLag, pp));
+		_bufferLag.push_back(std::pair<float, PlayerPacket*>(randomLag, pp));
 	}
 }
