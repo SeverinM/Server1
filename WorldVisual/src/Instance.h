@@ -7,6 +7,7 @@
 #include "ShapeDisplay.h"
 #include <unordered_map>
 #include <vector>
+#include "Text.h"
 
 #define SPEED_X_CAMERA 0.5
 #define SPEED_Y_CAMERA 0.5
@@ -29,6 +30,7 @@ namespace s1
 			std::vector<ShapeDisplay*>::iterator _it;
 			ShapeDisplay * axis[3];
 			static bool _contextInitialized;
+			Text * txt;
 
 		public:
 			Instance(unsigned int width , unsigned int height);

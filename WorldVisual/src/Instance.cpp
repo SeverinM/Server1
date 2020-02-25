@@ -9,6 +9,7 @@ bool Instance::_contextInitialized = false;
 
 Instance::Instance(unsigned int width , unsigned height)
 {
+	_rotationMode = false;
 	//Context
 	if (!_contextInitialized)
 	{
@@ -55,6 +56,12 @@ void Instance::Init(std::string path)
 	axis[0] = Instance::AddCube(glm::vec3(), glm::vec3(100, 0.01, 0.01));
 	axis[1] = Instance::AddCube(glm::vec3(), glm::vec3(0.01, 100, 0.01));
 	axis[2] = Instance::AddCube(glm::vec3(), glm::vec3(0.01, 0.01, 100));
+
+	Font::Init();
+	Shader* shad = new Shader("./src/text");
+	Font* ft = new Font("./src/arial.ttf");
+	ft->LoadlAll();
+	txt = new Text(ft, shad);
 }
 
 int Instance::Update(float elapsed)
@@ -79,13 +86,16 @@ int Instance::Update(float elapsed)
 
 	axis[2]->GetShader()->SetVec3("color", glm::vec3(0, 0, 1));
 	axis[2]->Render(_cam, _mat);
-	
+
 	//Display all cubes
 	_shader->SetVec3("color", glm::vec3());
 	for (_it = _allShapes.begin(); _it != _allShapes.end(); _it++)
 	{
 		(*_it)->Render(_cam, _mat);
 	}
+
+	txt->Render("0123456789.", 50.0f, 50.0f, 2.0f);
+
 	_deltaPosition = vec2();
 
 	glfwSwapBuffers(_window);
